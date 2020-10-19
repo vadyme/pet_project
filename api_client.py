@@ -43,7 +43,7 @@ def get_fixtures_by_league_and_date(league_id, date):
 
 def get_current_round_by_league_id(league_id):
     sess = s()
-    url = fixtures_url + 'rounds/' + str(league_id) + '/current'
+    url = '{}/{}/{}/{}'.format(fixtures_url, 'rounds', league_id, 'current')
     resp = sess.get(url)
 
     return resp.json()
@@ -51,7 +51,7 @@ def get_current_round_by_league_id(league_id):
 
 def get_standings_by_league_id(league_id):
     sess = s()
-    url = base_url + '/leagueTable/' + str(league_id)
+    url = '{}/{}/{}'.format(base_url, 'leagueTable', league_id)
     resp = sess.get(url)
 
     return resp.json()
@@ -59,7 +59,7 @@ def get_standings_by_league_id(league_id):
 
 def get_available_leagues():
     sess = s()
-    url = base_url + '/leagues'
+    url = '{}/{}'.format(base_url, 'leagues')
     resp = sess.get(url)
 
     return resp.json()
