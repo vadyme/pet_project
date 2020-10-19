@@ -63,7 +63,9 @@ class Fixtures(Table):
 
 
 class Fixture(object):
-    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short):
+    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short, matchday):
+        def __getitem__(self, item):
+            return self.Fixture[item]
         # self.home_team_id = home_team_id
         self.timestamp = timestamp
         self.home_team_name = home_team_name
@@ -73,6 +75,7 @@ class Fixture(object):
         self.away_team_logo = away_team_logo
         self.score = score
         self.status_short = status_short
+        self.matchday = matchday
 
 
 def datetime_to_readable(iso_datetime):
@@ -110,8 +113,9 @@ def populate_table_data(i):
         away_team_logo = away_team['logo']
         score = row['score']['fulltime']
         status_short = row['statusShort']
+        matchday = row['round']
 
-        items.append(Fixture(datetime_to_readable(timestamp), Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, score, Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short))
+        items.append(Fixture(datetime_to_readable(timestamp), Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, score, Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short, matchday))
     return items
 
 
