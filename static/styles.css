@@ -18,9 +18,12 @@ table {
   padding: 0 0 8em 0;
   border: none;
   border-collapse: collapse;
-
 }
 
 table tr:nth-child(even) {
     background-color: #323C50;
+}
+
+.matchday, .standings_table {
+	margin-bottom: 50px;
 }
