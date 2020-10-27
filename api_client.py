@@ -63,3 +63,12 @@ def get_available_leagues():
     resp = sess.get(url)
 
     return resp.json()
+
+
+def get_top_scores_by_league_id(league_id):
+    # "https://api-football-v1.p.rapidapi.com/v2/topscorers/{league_id}"
+    sess = s()
+    url = '{}/{}/{}'.format(base_url, 'topscorers', league_id)
+    resp = sess.get(url)
+
+    return resp.json()

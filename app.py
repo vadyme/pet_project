@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 import standing_table
-import fixture, matchday
+import fixture, Matchday
 from fixture import Fixtures
 from standing_table import StandingTable
+from Topscorers import Topscorer, TopscorersTable, populate_table_data
 
 app = Flask(__name__)
 
@@ -30,13 +31,23 @@ def fixtures(league_id):
 
 @app.route('/current/<int:league_id>')
 def current(league_id):
-    return matchday.build_table(league_id)
+    return Matchday.build_table(league_id)
 
 
 @app.route('/test/<int:league_id>')
 def test_page(league_id):
 
-    matchday_fixtures = Fixtures(matchday.get_current_matchday_fixtures(league_id))
+    matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(league_id))
+    table = StandingTable(standing_table.populate_table_data(league_id))
+    topscorers = TopscorersTable(populate_table_data(league_id))
+
+    return render_template('matchday_template.html', methods=['GET'], fixtures=matchday_fixtures, table=table, topscorers = topscorers)
+
+
+@app.route('/dev/<int:league_id>')
+def dev_page(league_id):
+
+    matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(league_id))
     table = StandingTable(standing_table.populate_table_data(league_id))
 
     return render_template('matchday_template.html', methods=['GET'], fixtures=matchday_fixtures, table=table)
