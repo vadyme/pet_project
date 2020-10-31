@@ -12,21 +12,22 @@ class TopscorersTable(Table):
     nationality = Col('')
     name = Col('')
     team = Col('')
-    minutes = Col('')
+    # minutes = Col('')
     goals = Col('')
-    assists = Col('')
+    # assists = Col('')
 
 
 class Topscorer(object):
-    def __init__(self, nationality, name, team, minutes, goals, assists):
+    # def __init__(self, nationality, name, team, minutes, goals, assists):
+    def __init__(self, nationality, name, team, goals):
         def __getitem__(self, item):
             return self.Topscorer[item]
         self.nationality = nationality
         self.name = name
         self.team = team
-        self.minutes = minutes
+        # self.minutes = minutes
         self.goals = goals
-        self.assists = assists
+        # self.assists = assists
 
 
 def get_topscorers_data(input):
@@ -50,10 +51,10 @@ def populate_table_data(i):
     for row in table_data:
         name = row['player_name']
         team = row['team_name']
-        minutes = row['games']['minutes_played']
+        # minutes = row['games']['minutes_played']
         goals = row['goals']['total']
         nationality = row['nationality']
-        assists = row['goals']['assists']
+        # assists = row['goals']['assists']
 
-        items.append(Topscorer(goals, name, team, nationality, assists, minutes))
+        items.append(Topscorer(goals, name, team, nationality))
     return items
