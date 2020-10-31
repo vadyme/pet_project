@@ -36,12 +36,12 @@ def current(league_id):
 
 @app.route('/test/<int:league_id>')
 def test_page(league_id):
-
+    matchday_id = Matchday.get_current_matchday_id(league_id).split('_')[-1]
     matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(league_id))
     table = StandingTable(standing_table.populate_table_data(league_id))
     topscorers = TopscorersTable(populate_table_data(league_id))
 
-    return render_template('matchday_template.html', methods=['GET'], fixtures=matchday_fixtures, table=table, topscorers = topscorers)
+    return render_template('matchday_template.html', methods=['GET'], matchday_id=matchday_id, fixtures=matchday_fixtures, table=table, topscorers = topscorers)
 
 
 @app.route('/dev/<int:league_id>')
