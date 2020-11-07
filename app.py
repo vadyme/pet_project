@@ -15,7 +15,14 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+
+    bundesliga_matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(2755))
+    primera_matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(2833))
+    seriea_matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(2857))
+    epl_matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(2790))
+
+    return render_template('index.html', bundesliga_matchday_fixtures=bundesliga_matchday_fixtures, primera_matchday_fixtures=primera_matchday_fixtures,
+           seriea_matchday_fixtures = seriea_matchday_fixtures, epl_matchday_fixtures= epl_matchday_fixtures)
     # return standing_table.build_table(league_id)
 
 
