@@ -12,8 +12,8 @@ class StandingTable(Table):
     def sort_url(self, col_id, reverse=False):
         pass
     logo = Col('')
-    rank = Col('#')
-    team_name = Col('Team')
+    rank = Col('')
+    team_name = Col('')
     points = Col('Pts')
     games_played = Col('P')
     wins = Col('W')
