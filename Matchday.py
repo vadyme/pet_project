@@ -5,8 +5,10 @@ from pprint import pprint
 import json
 from flask_table import Table, Col
 from flask import Markup
-from fixture import get_fixture_data, populate_table_data, Fixtures, Fixture
+from Fixture import get_fixture_data, populate_table_data, Fixtures, Fixture
+from dataclasses import dataclass
 
+# TODO: for the defined scope of leagues get all current fixtures, sort by date/time, display on the index page
 
 def get_current_matchday_id(league_id):
     current_matchday = api_client.get_current_round_by_league_id(league_id)
@@ -34,9 +36,31 @@ def get_specific_matchday_fixtures(league_id, matchday_id):
     return matchday_fixtures
 
 
-def build_table(i):
+# def get_specific_matchday_fixtures(league_id, matchday_id):
+#     fixtures = api_client.get_fixtures_by_league_and_round(league_id, matchday_id)
+#     matchday_fixtures = []
+#     for Fixture in fixtures:
+#         matchday_fixtures.append(Fixture)
+#
+#     return matchday_fixtures
 
-    items = get_current_matchday_fixtures(i)
-    table = Fixtures(items)
 
-    return table.__html__()
+def get_current_matchday_for_multiple_leagues():
+    leagues = [2755, 2833, 2857, 2790]
+    fixtures = []
+    for id in leagues:
+        fs = get_current_matchday_fixtures(id)
+        for fixture in fs:
+            fixtures.append(fixture)
+
+    sorted_fixtures = sorted(fixtures, key=lambda x: x.timestamp)
+
+    return sorted_fixtures
+
+
+# def build_table(i):
+#
+#     items = get_current_matchday_fixtures(i)
+#     table = Fixtures(items)
+#
+#     return table.__html__()
