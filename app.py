@@ -21,8 +21,8 @@ def index():
     seriea_matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(2857))
     epl_matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(2790))
 
-    return render_template('index.html', bundesliga_matchday_fixtures=bundesliga_matchday_fixtures, primera_matchday_fixtures=primera_matchday_fixtures,
-           seriea_matchday_fixtures = seriea_matchday_fixtures, epl_matchday_fixtures= epl_matchday_fixtures)
+    return render_template('index.html', bundesliga=bundesliga_matchday_fixtures, primera=primera_matchday_fixtures,
+           seriea=seriea_matchday_fixtures, epl=epl_matchday_fixtures)
     # return standing_table.build_table(league_id)
 
 
@@ -43,12 +43,12 @@ def current(league_id):
 
 @app.route('/test/<int:league_id>')
 def test_page(league_id):
-    matchday_id = Matchday.get_current_matchday_id(league_id).split('_')[-1]
+    matchday_id = Matchday.get_current_matchday_id(league_id)
     matchday_fixtures = Fixtures(Matchday.get_current_matchday_fixtures(league_id))
     table = StandingTable(standing_table.populate_table_data(league_id))
     topscorers = TopscorersTable(populate_table_data(league_id))
 
-    return render_template('matchday_template.html', methods=['GET'], matchday_id=matchday_id, fixtures=matchday_fixtures, table=table, topscorers = topscorers)
+    return render_template('matchday_template.html', methods=['GET'], matchday_id = matchday_id, fixtures=matchday_fixtures, table=table, topscorers = topscorers)
 
 
 @app.route('/dev/<int:league_id>')

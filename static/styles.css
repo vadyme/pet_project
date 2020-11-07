@@ -51,3 +51,8 @@ table td {
     margin-top: 25px;
 	margin-bottom: 25px;
 }
+
+.header {
+  text-align: center;
+  font-weight: bold;
+}
