@@ -5,10 +5,9 @@ from pprint import pprint
 import json
 from flask_table import Table, Col
 from flask import Markup
-from Fixture import get_fixture_data, populate_table_data, Fixtures, Fixture
+from Fixture import get_fixture_data, populate_table_data, Fixtures, Fixture, is_live_fixture, live_fixture_data
 from dataclasses import dataclass
 
-# TODO: for the defined scope of leagues get all current fixtures, sort by date/time, display on the index page
 
 def get_current_matchday_id(league_id):
     current_matchday = api_client.get_current_round_by_league_id(league_id)
@@ -16,12 +15,13 @@ def get_current_matchday_id(league_id):
 
     return matchday_id
 
+
 def get_current_matchday_fixtures(league_id):
     current_matchday = api_client.get_current_round_by_league_id(league_id)
     # {'results': 1, 'fixtures': ['Regular_Season_-_7']}
     current_matchday_id = current_matchday['api']['fixtures'][0].split(' - ')[-1]
-    current_matchday_fixtures = get_specific_matchday_fixtures(league_id, current_matchday_id)
-
+    # current_matchday_fixtures = get_specific_matchday_fixtures(league_id, current_matchday_id)
+    current_matchday_fixtures = get_specific_matchday_fixtures(league_id, '9')
     return current_matchday_fixtures
 
 
@@ -31,6 +31,10 @@ def get_specific_matchday_fixtures(league_id, matchday_id):
     matchday_fixtures = []
     for Fixture in all_fixtures:
         if Fixture.matchday.split(' - ')[-1] == matchday_id.split('_')[-1]:
+            # TODO: if fixture is live, provide correspondent details
+            if is_live_fixture(Fixture):
+                live_fixture = live_fixture_data(Fixture)
+                matchday_fixtures.append(live_fixture)
             matchday_fixtures.append(Fixture)
 
     return matchday_fixtures

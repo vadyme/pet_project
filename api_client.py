@@ -72,3 +72,12 @@ def get_top_scores_by_league_id(league_id):
     resp = sess.get(url)
 
     return resp.json()
+
+
+def get_fixture_by_id(fixture_id):
+    # get("https://api-football-v1.p.rapidapi.com/v2/fixtures/id/{fixture_id}");
+    sess = s()
+    url = '{}/{}/{}'.format(fixtures_url, 'id', fixture_id)
+    resp = sess.get(url)
+
+    return resp.json()

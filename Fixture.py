@@ -4,6 +4,7 @@ from flask import Markup
 from flask_table import Table, Col
 import dateutil.parser
 from datetime import datetime
+from dataclasses import dataclass
 '''
 {
     "status": "Match Finished", 
@@ -49,6 +50,8 @@ from datetime import datetime
 }
 '''
 
+# TODO: add Events
+
 
 class Fixtures(Table):
     def sort_url(self, col_id, reverse=False):
@@ -63,9 +66,10 @@ class Fixtures(Table):
 
 
 class Fixture(object):
-    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short, matchday):
+    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short, matchday, id):
         def __getitem__(self, item):
             return self.Fixture[item]
+        self.id = id
         # self.home_team_id = home_team_id
         self.timestamp = timestamp
         self.home_team_name = home_team_name
@@ -102,6 +106,7 @@ def populate_table_data(i):
 
     items = []
     for row in table_data:
+        fixture_id = row['fixture_id']
         timestamp = row['event_date']
         home_team = row['homeTeam']
         away_team = row['awayTeam']
@@ -115,13 +120,33 @@ def populate_table_data(i):
         status_short = row['statusShort']
         matchday = row['round']
 
-        items.append(Fixture(datetime_to_readable(timestamp), Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, score, Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short, matchday))
+        items.append(Fixture(datetime_to_readable(timestamp), Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, score, Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short, matchday, fixture_id))
     return items
 
 
-def build_table(i):
+def is_live_fixture(fixture):
 
-    items = populate_table_data(i)
-    table = Fixtures(items)
+    is_live = True if (fixture.status_short not in ['FT', 'NS']) else False
+    return is_live
 
-    return table.__html__()
+
+def live_fixture_data(fixture):
+
+    # TODO: save a response as an JSON file and use it instead of pulling the API
+
+    f = api_client.get_fixture_by_id(fixture.id)
+    live_fixture_stats = f['api']['fixtures'][0]
+    fixture.status_short = live_fixture_stats['elapsed']
+    # "fulltime": "0-3"
+    live_score = '{}-{}'.format(str(live_fixture_stats['goalsHomeTeam']), str(live_fixture_stats['goalsAwayTeam']))
+    fixture.score = live_score
+
+    return Fixture
+
+
+# def build_table(i):
+#
+#     items = populate_table_data(i)
+#     table = Fixtures(items)
+#
+#     return table.__html__()
