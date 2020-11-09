@@ -5,7 +5,7 @@ from pprint import pprint
 import json
 from flask_table import Table, Col
 from flask import Markup
-from Fixture import get_fixture_data, populate_table_data, Fixtures, Fixture, is_live_fixture, live_fixture_data
+from FixtureTableRow import get_fixtures_by_league_id, build_fixtures_table, FixturesTable, FixtureTableRow, is_live_fixture, live_fixture_data
 from dataclasses import dataclass
 
 
@@ -27,7 +27,7 @@ def get_current_matchday_fixtures(league_id):
 
 def get_specific_matchday_fixtures(league_id, matchday_id):
     # fixture_data = get_fixture_data(league_id)
-    all_fixtures = populate_table_data(league_id)
+    all_fixtures = build_fixtures_table(league_id)
     matchday_fixtures = []
     for Fixture in all_fixtures:
         if Fixture.matchday.split(' - ')[-1] == matchday_id.split('_')[-1]:
