@@ -11,8 +11,9 @@ json_file = './models/standing_table.json'
 class StandingTable(Table):
     def sort_url(self, col_id, reverse=False):
         pass
-    logo = Col('')
+
     rank = Col('')
+    logo = Col('')
     team_name = Col('')
     points = Col('Pts')
     games_played = Col('P')
@@ -47,7 +48,7 @@ def get_table_data(input):
 
 
 class Item(object):
-    def __init__(self, logo, rank, team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form):
+    def __init__(self, rank, logo, team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form):
         self.logo = logo
         self.rank = rank
         self.team_name = team_name
@@ -79,7 +80,7 @@ def populate_table_data(i):
         points = row['points']
         form = row['forme']
 
-        items.append(Item(Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), rank, team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form))
+        items.append(Item(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form))
     return items
 
 
