@@ -25,7 +25,7 @@ class StandingTable(Table):
     form = Col('Form')
 
 
-def get_table_data(input):
+def get_standings_by_league_id(input):
 
     #TODO: this is stupid, redo. Find a way to distinct how data should be retrieved (API vs DB vs else)
 
@@ -47,7 +47,7 @@ def get_table_data(input):
 #     return table_data
 
 
-class Item(object):
+class StandingTableRow(object):
     def __init__(self, rank, logo, team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form):
         self.logo = logo
         self.rank = rank
@@ -62,10 +62,10 @@ class Item(object):
         self.form = form
 
 
-def populate_table_data(i):
-    table_data = get_table_data(i)
+def build_standings_table(i):
+    table_data = get_standings_by_league_id(i)
 
-    items = []
+    standing_table_rows = []
     for row in table_data:
         logo = row['logo']
         rank = row['rank']
@@ -80,13 +80,6 @@ def populate_table_data(i):
         points = row['points']
         form = row['forme']
 
-        items.append(Item(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form))
-    return items
+        standing_table_rows.append(StandingTableRow(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form))
+    return standing_table_rows
 
-
-def build_table(i):
-
-    items = populate_table_data(i)
-    table = StandingTable(items)
-
-    return table.__html__()
