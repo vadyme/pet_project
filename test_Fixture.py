@@ -1,13 +1,13 @@
 import unittest
 import json
-from Fixture import Fixture, live_fixture_data
+from fixtures_table import FixtureTableRow, is_live_fixture
 
 fixture_json = './models/response_get_fixture_by_id.json'
 live_fixture_json = './models/response_get_live_fixture_by_id.json'
 
 
 def create_fixture(json_file):
-    f = open(fixture_json)
+    f = open(json_file)
     data = json.load(f)
     fixture_data = data['api']['fixtures'][0]
     f.close()
@@ -26,8 +26,8 @@ def create_fixture(json_file):
     status_short = fixture_data['statusShort']
     matchday = fixture_data['round']
 
-    fixture = Fixture(timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name,
-                           status_short, matchday, id)
+    fixture = FixtureTableRow(timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name,
+                              status_short, matchday, id)
     return fixture
 
 
@@ -35,7 +35,7 @@ class TestFixture(unittest.TestCase):
 
     def setUp(self):
         self.fixture = create_fixture(fixture_json)
-        # self.live_fixture = create_fixture(live_fixture_json)
+        self.live_fixture = create_fixture(live_fixture_json)
 
         f = open(live_fixture_json)
         self.data = json.load(f)
@@ -51,3 +51,7 @@ class TestFixture(unittest.TestCase):
 
         self.assertEqual(self.fixture.status_short, 40)
         self.assertEqual(self.fixture.score, '1-1')
+
+    def test_is_live_fixture(self):
+        self.assertEqual(is_live_fixture(self.fixture), False)
+        self.assertEqual(is_live_fixture(self.live_fixture), True)
