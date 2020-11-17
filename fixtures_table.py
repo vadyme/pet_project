@@ -4,6 +4,7 @@ from flask import Markup
 from flask_table import Table, Col
 import dateutil.parser
 from datetime import datetime
+from fixture import FixtureBriefInfo
 
 # TODO: add Events
 
@@ -18,21 +19,21 @@ class FixturesTable(Table):
     away_team_logo = Col('')
     away_team_name = Col('')
     status_short = Col('')
+    # league_name = Col('')
 
 
-class FixtureTableRow(object):
-    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short, matchday, id):
-        def __getitem__(self, item):
-            return self.FixtureTableRow[item]
-        self.id = id
-        self.timestamp = timestamp
-        self.home_team_name = home_team_name
-        self.home_team_logo = home_team_logo
-        self.away_team_name = away_team_name
-        self.away_team_logo = away_team_logo
-        self.score = score
-        self.status_short = status_short
-        self.matchday = matchday
+class MultipleLeaguesFixturesTable(Table):
+    def sort_url(self, col_id, reverse=False):
+        pass
+    timestamp = Col('')
+    home_team_logo = Col('')
+    home_team_name = Col('')
+    score = Col('')
+    away_team_logo = Col('')
+    away_team_name = Col('')
+    status_short = Col('')
+    country_flag = Col('')
+    league_name = Col('')
 
 
 def datetime_to_readable(iso_datetime):
@@ -74,8 +75,11 @@ def build_fixtures_table(i):
         score = row['score']['fulltime']
         status_short = row['statusShort']
         matchday = row['round']
+        country_flag = row['league']['flag']
+        league_id = row['league_id']
+        league_name = row['league']['name']
 
-        fixture_table_rows.append(FixtureTableRow(datetime_to_readable(timestamp), Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, score, Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short, matchday, fixture_id))
+        fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp), Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, score, Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short, matchday, fixture_id, Markup('<img src =' + country_flag + ' style="width:20px;height:20px;">'), league_name, league_id))
     return fixture_table_rows
 
 
@@ -96,4 +100,4 @@ def live_fixture_data(fixture):
     live_score = '{}-{}'.format(str(live_fixture_stats['goalsHomeTeam']), str(live_fixture_stats['goalsAwayTeam']))
     fixture.score = live_score
 
-    return FixtureTableRow
+    return FixtureBriefInfo

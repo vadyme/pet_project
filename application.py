@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 
+import Topscorers
 import fixture
 import standing_table
 import fixtures_table, Matchday
@@ -19,7 +20,7 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
 
-    current_matchday_fixtures = FixturesTable(Matchday.get_current_matchday_for_multiple_leagues())
+    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(Matchday.get_current_matchday_for_multiple_leagues())
 
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures)
 
@@ -29,7 +30,7 @@ def test_page(league_id):
     matchday_id = Matchday.get_current_matchday_id(league_id)
     matchday_fixtures = FixturesTable(Matchday.get_current_matchday_fixtures(league_id))
     table = StandingTable(standing_table.build_standings_table(league_id))
-    topscorers = TopscorersTable(populate_table_data(league_id))
+    topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
 
     return render_template('matchday_template.html', methods=['GET'], matchday_id = matchday_id, fixtures=matchday_fixtures, table=table, topscorers = topscorers)
 
