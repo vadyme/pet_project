@@ -2,13 +2,14 @@ import json
 
 import api_client
 from flask_table import Table, Col
-from api_client import get_fixture_events_by_fixture_id
 
 
 class FixtureBriefInfo(object):
-    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short, matchday, id, country_flag, league_name, league_id):
+    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short,
+                 matchday, id, country_flag, league_name, league_id):
         def __getitem__(self, item):
             return self.FixtureBriefInfo[item]
+
         self.id = id
         self.timestamp = timestamp
         self.home_team_name = home_team_name
@@ -26,6 +27,7 @@ class FixtureBriefInfo(object):
 class FixtureEvents(object):
     def __init__(self, events):
         self.events = events
+
 
 '''
 {
@@ -47,6 +49,7 @@ class FixtureEvents(object):
 class EventsTable(Table):
     def sort_url(self, col_id, reverse=False):
         pass
+
     elapsed = Col('')
     type = Col('')
     player = Col('')
@@ -54,7 +57,8 @@ class EventsTable(Table):
 
 
 class Event(object):
-    def __init__(self, elapsed, elapsed_plus, team_id, teamName, player_id, player, assist_id, assist, type, detail, comments):
+    def __init__(self, elapsed, elapsed_plus, team_id, teamName, player_id, player, assist_id, assist, type, detail,
+                 comments):
         self.elapsed = elapsed
         self.elapsed_plus = elapsed_plus
         self.team_id = team_id
@@ -69,7 +73,7 @@ class Event(object):
 
 
 def get_fixture_events(fixture_id):
-    #TODO: this is stupid, redo. Find a way to distinct how data should be retrieved (API vs DB vs else)
+    # TODO: this is stupid, redo. Find a way to distinct how data should be retrieved (API vs DB vs else)
 
     if type(fixture_id) == int:
         data = api_client.get_fixture_events_by_fixture_id(fixture_id)
@@ -100,7 +104,7 @@ def populate_table_data(i):
         elapsed = row['elapsed']
         elapsed_plus = row['elapsed_plus']
         team_id = row['team_id']
-        teamName = row['teamName']
+        team_name = row['teamName']
         player_id = row['player_id']
         player = row['player']
         assist_id = row['assist_id']
@@ -109,5 +113,6 @@ def populate_table_data(i):
         detail = row['detail']
         comments = row['comments']
 
-        items.append(Event(elapsed, elapsed_plus, team_id, teamName, player_id, player, assist_id, assist, type, detail, comments))
+        items.append(Event(elapsed, elapsed_plus, team_id, team_name, player_id, player, assist_id, assist, type, detail,
+                           comments))
     return items

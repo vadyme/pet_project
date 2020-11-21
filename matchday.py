@@ -1,12 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import api_client
-from pprint import pprint
-import json
-from flask_table import Table, Col
-from flask import Markup
-from fixtures_table import get_fixtures_by_league_id, build_fixtures_table, FixturesTable, FixtureTableRow, is_live_fixture, live_fixture_data
-from dataclasses import dataclass
+from fixtures_table import build_fixtures_table, is_live_fixture, live_fixture_data
 
 
 def get_current_matchday_id(league_id):
@@ -16,6 +11,7 @@ def get_current_matchday_id(league_id):
     return matchday_id
 
 # TODO: is it really necessary to iterate through the entire season calendar to find current matchday fixtures?
+
 
 def get_current_matchday_fixtures(league_id):
     current_matchday = api_client.get_current_round_by_league_id(league_id)
@@ -62,11 +58,3 @@ def get_current_matchday_for_multiple_leagues():
     sorted_fixtures = sorted(fixtures, key=lambda x: x.timestamp)
 
     return sorted_fixtures
-
-
-# def build_table(i):
-#
-#     items = get_current_matchday_fixtures(i)
-#     table = Fixtures(items)
-#
-#     return table.__html__()

@@ -26,8 +26,7 @@ class StandingTable(Table):
 
 
 def get_standings_by_league_id(input):
-
-    #TODO: this is stupid, redo. Find a way to distinct how data should be retrieved (API vs DB vs else)
+    # TODO: this is stupid, redo. Find a way to distinct how data should be retrieved (API vs DB vs else)
 
     if type(input) == int:
         data = api_client.get_standings_by_league_id(input)
@@ -48,7 +47,8 @@ def get_standings_by_league_id(input):
 
 
 class StandingTableRow(object):
-    def __init__(self, rank, logo, team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form):
+    def __init__(self, rank, logo, team_name, games_played, wins, draws, losses, goals_for, goals_against, points,
+                 form):
         self.logo = logo
         self.rank = rank
         self.team_name = team_name
@@ -80,6 +80,7 @@ def build_standings_table(i):
         points = row['points']
         form = row['forme']
 
-        standing_table_rows.append(StandingTableRow(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name, games_played, wins, draws, losses, goals_for, goals_against, points, form))
+        standing_table_rows.append(
+            StandingTableRow(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name,
+                             games_played, wins, draws, losses, goals_for, goals_against, points, form))
     return standing_table_rows
-

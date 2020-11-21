@@ -1,14 +1,12 @@
 import api_client
 import json
-from flask import Markup
 from flask_table import Table, Col
-import dateutil.parser
-from datetime import datetime
 
 
 class TopscorersTable(Table):
     def sort_url(self, col_id, reverse=False):
         pass
+
     nationality = Col('')
     name = Col('')
     team = Col('')
@@ -22,6 +20,7 @@ class Topscorer(object):
     def __init__(self, nationality, name, team, goals):
         def __getitem__(self, item):
             return self.Topscorer[item]
+
         self.nationality = nationality
         self.name = name
         self.team = team
@@ -31,8 +30,7 @@ class Topscorer(object):
 
 
 def get_topscorers_data(input):
-
-    #TODO: this is stupid, redo. Find a way to distinct how data should be retrieved (API vs DB vs else)
+    # TODO: this is stupid, redo. Find a way to distinct how data should be retrieved (API vs DB vs else)
 
     if type(input) == int:
         data = api_client.get_top_scores_by_league_id(input)
