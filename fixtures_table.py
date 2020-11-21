@@ -92,6 +92,7 @@ def is_live_fixture(fixture):
 def live_fixture_data(fixture):
 
     # TODO: save a response as an JSON file and use it instead of pulling the API
+    # TODO: bug - a live fixture is being displayed twice
 
     f = api_client.get_fixture_by_id(fixture.id)
     live_fixture_stats = f['api']['fixtures'][0]
@@ -100,4 +101,5 @@ def live_fixture_data(fixture):
     live_score = '{}-{}'.format(str(live_fixture_stats['goalsHomeTeam']), str(live_fixture_stats['goalsAwayTeam']))
     fixture.score = live_score
 
-    return FixtureBriefInfo
+
+    return fixture
