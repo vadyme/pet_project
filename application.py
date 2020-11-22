@@ -36,7 +36,7 @@ def test_page(league_id):
                            matchday_id=matchday_id, fixtures=matchday_fixtures, table=table, topscorers=topscorers)
 
 
-@app.route('/dev/fixture/<int:fixture_id>')
+@app.route('/fixture/<int:fixture_id>')
 def fixture_events_page(fixture_id):
     fixture_events = EventsTable(fixture.populate_table_data(fixture_id))
 
