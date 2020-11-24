@@ -25,7 +25,7 @@ def index():
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures)
 
 
-@app.route('/test/<int:league_id>')
+@app.route('/league/<int:league_id>')
 def test_page(league_id):
     matchday_id = matchday.get_current_matchday_id(league_id)
     matchday_fixtures = FixturesTable(matchday.get_current_matchday_fixtures(league_id))

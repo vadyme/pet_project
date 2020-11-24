@@ -84,7 +84,7 @@ def build_fixtures_table(i):
             '<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, Markup('<a href = "/fixture/'+ str(fixture_id) + '">' + str(score) +'</a>'), Markup(
             '<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short,
                                                    matchday, fixture_id, Markup(
-                '<img src =' + country_flag + ' style="width:20px;height:20px;">'), league_name, league_id))
+                '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id))
     return fixture_table_rows
 
 
