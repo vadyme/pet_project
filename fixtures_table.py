@@ -5,6 +5,7 @@ from flask_table import Table, Col
 import dateutil.parser
 from datetime import datetime
 from fixture import FixtureBriefInfo
+from kickoff_time import KickOffTime
 
 
 # TODO: add Events
@@ -41,7 +42,10 @@ class MultipleLeaguesFixturesTable(Table):
 
 def datetime_to_readable(iso_datetime):
     # "event_date": "2020-09-12T14:00:00+00:00"
-    return datetime.strftime(dateutil.parser.isoparse(iso_datetime), '%d %b %H:%M')
+    datetime_hr = datetime.strftime(dateutil.parser.isoparse(iso_datetime), '%d %b %H:%M')
+    date_hr = f'{datetime_hr.split(" ")[0]} {datetime_hr.split(" ")[1]}'
+    time_hr = f'{datetime_hr.split(" ")[2]}'
+    return KickOffTime(date_hr, time_hr)
 
 
 def get_fixtures_by_league_id(input):
@@ -73,14 +77,14 @@ def build_fixtures_table(i):
         home_team_logo = home_team['logo']
         away_team_name = away_team['team_name']
         away_team_logo = away_team['logo']
-        score = row['score']['fulltime'] if row['score']['fulltime'] is not None else ''
+        score = row['score']['fulltime'] if row['score']['fulltime'] is not None else datetime_to_readable(timestamp).time
         status_short = row['statusShort']
         matchday = row['round']
         country_flag = row['league']['flag']
         league_id = row['league_id']
         league_name = row['league']['name']
 
-        fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp), Markup(
+        fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
             '<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, Markup('<a href = "/fixture/'+ str(fixture_id) + '">' + str(score) +'</a>'), Markup(
             '<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short,
                                                    matchday, fixture_id, Markup(
