@@ -16,9 +16,9 @@ body {
 }
 
 a:link, a:visited {
-  background-color: #f44336;
+  /* background-color: #f44336;
+  padding: 14px 25px; */
   color: white;
-  padding: 14px 25px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -31,7 +31,7 @@ a:hover, a:active {
 table {
   text-align: left;
   overflow: hidden;
-  width: 60%;
+  width: 55%;
   margin: 0 auto;
   display: table;
   padding: 0 0 8em 0;
