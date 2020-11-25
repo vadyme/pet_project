@@ -73,7 +73,7 @@ def build_fixtures_table(i):
         home_team_logo = home_team['logo']
         away_team_name = away_team['team_name']
         away_team_logo = away_team['logo']
-        score = row['score']['fulltime']
+        score = row['score']['fulltime'] if row['score']['fulltime'] is not None else ''
         status_short = row['statusShort']
         matchday = row['round']
         country_flag = row['league']['flag']
