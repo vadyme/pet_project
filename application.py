@@ -8,8 +8,10 @@ from fixtures_table import FixturesTable
 from standing_table import StandingTable
 from Topscorers import TopscorersTable
 from fixture import EventsTable, FixtureBriefInfo
+from league import map_league_name_to_id
 
 app = Flask(__name__)
+
 
 # json_file = './models/standing_table.json'
 # fixtures_json = './models/response_get_fixtures_by_league_id.json'
@@ -20,16 +22,31 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 @app.route('/', methods=['GET'])
 def index():
-
-    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_current_matchday_for_multiple_leagues())
+    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(
+        matchday.get_current_matchday_for_multiple_leagues())
 
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures)
 
 
-@app.route('/league/<int:league_id>')
-def test_page(league_id):
-    matchday_id = matchday.get_current_matchday_id(league_id)
-    matchday_fixtures = FixturesTable(matchday.get_current_matchday_fixtures(league_id))
+@app.route('/league/<league_name>')
+def test_page(league_name):
+    league_id = map_league_name_to_id(league_name)
+    if league_id is not None:
+        matchday_id = matchday.get_current_matchday_id(league_id)
+        matchday_fixtures = FixturesTable(matchday.get_current_matchday_fixtures(league_id))
+        table = StandingTable(standing_table.build_standings_table(league_id))
+        topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
+
+        return render_template('matchday_template.html', methods=['GET'],
+                               matchday_id=matchday_id, fixtures=matchday_fixtures, table=table, topscorers=topscorers)
+    else:
+        return render_template('page_not_found.html')
+
+
+@app.route('/league/<int:league_id>/matchday/<int:matchday_id>')
+def matchday_page(league_id, matchday_id):
+    # matchday_id = matchday.get_current_matchday_id(league_id)
+    matchday_fixtures = FixturesTable(matchday.get_specific_matchday_fixtures(league_id, matchday_id))
     table = StandingTable(standing_table.build_standings_table(league_id))
     topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
 
