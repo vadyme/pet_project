@@ -1,7 +1,7 @@
 <html>
 <head>
 	
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="/static/styles.css">
 
 </head>
 <body>
@@ -9,46 +9,32 @@
 <table class="fixt-stat-table">
 <tbody>
 	<tr class = "gen-info">
-		<td div="wide-td">Bundesliga</td>
+		<td div="wide-td">{{league_name}}</td>
 		<td div="narrow-td"></td>
-		<td style="width: 10%; "></td>
-		<td div="wide-td">Wed, Nov 25</td>
+		<td div="wide-td">{{timestamp}}</td>
 		<td div="narrow-td"></td>
-		<td div="narrow-td"></td>
-		<td div="wide-td">Matchday 13</td>
+		<td div="wide-td">{{md}}</td>
 	</tr>
 	<tr class = "midrow">
-	<td div="wide-td"><img src="https://ssl.gstatic.com/onebox/media/sports/logos/Lv6xmBlUIpN3GAFhtf6nqQ_96x96.png" alt="" /></td>
-	<td div="narrow-td"></td>
-	<td div="narrow-td">
-		<h1>2</h1>
-	</td>
-	<td div="wide-td">
-		<h1>-</h1>
-	</td>
-	<td div="narrow-td">
-		<h1>1</h1>
-	</td>
-	<td div="narrow-td"></td>
-	<td div="wide-td"><img src="https://ssl.gstatic.com/onebox/media/sports/logos/LrmKpl-VKgGyE5F3HK7Quw_96x96.png" /></td>
+		<td div="wide-td"><img src={{home_team_logo}} /></td>
+		<td div="narrow-td"></td>
+		<td div="wide-td"><h1>{{score}}</h1></td>
+		<td div="narrow-td"></td>
+		<td div="wide-td"><img src={{away_team_logo}} /></td>
 	</tr>
-		<tr >
-			<td div="wide-td"></td>
-			<td div="narrow-td"></td>
-			<td style="width: 10%; "></td>
-			<td class = "fixture-progress">FT</td>
-			<td div="narrow-td"></td>
-			<td div="narrow-td"></td>
-			<td div="wide-td"></td>
+	<tr >
+		<td div="wide-td"></td>
+		<td div="narrow-td"></td>
+		<td class = "fixture-progress">{{elapsed}}</td>
+		<td div="narrow-td"></td>
+		<td div="wide-td"></td>
 	</tr>
 	<tr class = "team-names">
-		<td div="wide-td">Juventus</td>
-		<td div="narrow-td"></td>
+		<td div="wide-td">{{home_team_name}}</td>
 		<td div="narrow-td"></td>
 		<td div="wide-td"></td>
 		<td div="narrow-td"></td>
-		<td div="narrow-td"></td>
-		<td div="wide-td">Ferencvaros</td>
+		<td div="wide-td">{{away_team_name}}</td>
 	</tr>
 
 </tbody>

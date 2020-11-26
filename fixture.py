@@ -29,7 +29,7 @@ class FixtureBriefInfo(object):
 
 
 def build_fixture_stats(fixture_id):
-    fixture = [] # TODO: this is stupid, don't use list here, research!
+    # fixture = [] # TODO: this is stupid, don't use list here, research!
     fixture_info = api_client.get_fixture_by_id(fixture_id)
     fixture_stats = fixture_info['api']['fixtures'][0]
     fixture_id = fixture_stats['fixture_id']
@@ -47,14 +47,17 @@ def build_fixture_stats(fixture_id):
     league_id = fixture_stats['league_id']
     league_name = fixture_stats['league']['name']
 
-    fixture.append(FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
-            '<img src =' + home_team_logo + ' style="width:70px;height:70px;">'), home_team_name, Markup('<a href = "/fixture/'+ str(fixture_id) + '">' + str(score) +'</a>'), Markup(
-            '<img src =' + away_team_logo + ' style="width:70px;height:70px;">'), away_team_name, status_short,
-                                                   matchday, fixture_id, Markup(
-                '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id))
+    # return FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
+    #         '<img src =' + home_team_logo + ' style="width:70px;height:70px;">'), home_team_name, Markup('<a href = "/fixture/'+ str(fixture_id) + '">' + str(score) +'</a>'), Markup(
+    #         '<img src =' + away_team_logo + ' style="width:70px;height:70px;">'), away_team_name, status_short,
+    #                                                matchday, fixture_id, Markup(
+    #             '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id)
 
+    return FixtureBriefInfo(datetime_to_readable(timestamp).date, home_team_logo, home_team_name, str(score),
+                            away_team_logo, away_team_name, status_short, matchday, fixture_id, country_flag, league_name,
+                            league_id)
 
-    return fixture
+    # return fixture
 
 
 def datetime_to_readable(iso_datetime):
