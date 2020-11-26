@@ -56,3 +56,44 @@ table td {
   text-align: center;
   font-weight: bold;
 }
+
+.fixt-stat-table {
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.gen-info {
+	width: 55%;
+	border-collapse: collapse;
+	height: 15px;
+	text-align: center;
+	height:35px;
+	margin-bottom: 50px;
+}
+
+.midrow {
+	border-collapse: collapse;
+	height: 150px;
+	text-align: center;
+	padding-top: 30px;
+}
+
+.team-names {
+	height: 20px;
+	text-align: center;
+}
+
+.fixture-progress {
+	width: 20%;
+	text-align: center;
+	color: grey;
+	font-size: 14px;
+}
+
+#wide-td {
+	width: 20px;
+}
