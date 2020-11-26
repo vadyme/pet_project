@@ -1,15 +1,19 @@
 import json
 
+import dateutil
+
 import api_client
 from flask_table import Table, Col
+from flask import Markup
+
+from datetime import datetime
+
+from kickoff_time import KickOffTime
 
 
 class FixtureBriefInfo(object):
     def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short,
                  matchday, id, country_flag, league_name, league_id):
-        def __getitem__(self, item):
-            return self.FixtureBriefInfo[item]
-
         self.id = id
         self.timestamp = timestamp
         self.home_team_name = home_team_name
@@ -22,6 +26,43 @@ class FixtureBriefInfo(object):
         self.country_flag = country_flag
         self.league_id = league_id
         self.league_name = league_name
+
+
+def build_fixture_stats(fixture_id):
+    fixture = [] # TODO: this is stupid, don't use list here, research!
+    fixture_info = api_client.get_fixture_by_id(fixture_id)
+    fixture_stats = fixture_info['api']['fixtures'][0]
+    fixture_id = fixture_stats['fixture_id']
+    timestamp = fixture_stats['event_date']
+    home_team = fixture_stats['homeTeam']
+    away_team = fixture_stats['awayTeam']
+    home_team_name = home_team['team_name']
+    home_team_logo = home_team['logo']
+    away_team_name = away_team['team_name']
+    away_team_logo = away_team['logo']
+    score = fixture_stats['score']['fulltime'] if fixture_stats['score']['fulltime'] is not None else datetime_to_readable(timestamp).time
+    status_short = fixture_stats['statusShort']
+    matchday = fixture_stats['round']
+    country_flag = fixture_stats['league']['flag']
+    league_id = fixture_stats['league_id']
+    league_name = fixture_stats['league']['name']
+
+    fixture.append(FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
+            '<img src =' + home_team_logo + ' style="width:70px;height:70px;">'), home_team_name, Markup('<a href = "/fixture/'+ str(fixture_id) + '">' + str(score) +'</a>'), Markup(
+            '<img src =' + away_team_logo + ' style="width:70px;height:70px;">'), away_team_name, status_short,
+                                                   matchday, fixture_id, Markup(
+                '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id))
+
+
+    return fixture
+
+
+def datetime_to_readable(iso_datetime):
+    # "event_date": "2020-09-12T14:00:00+00:00"
+    datetime_hr = datetime.strftime(dateutil.parser.isoparse(iso_datetime), '%d %b %H:%M')
+    date_hr = f'{datetime_hr.split(" ")[0]} {datetime_hr.split(" ")[1]}'
+    time_hr = f'{datetime_hr.split(" ")[2]}'
+    return KickOffTime(date_hr, time_hr)
 
 
 class FixtureEvents(object):

@@ -7,7 +7,7 @@ import fixtures_table, matchday
 from fixtures_table import FixturesTable
 from standing_table import StandingTable
 from Topscorers import TopscorersTable
-from fixture import EventsTable
+from fixture import EventsTable, FixtureBriefInfo
 
 app = Flask(__name__)
 
@@ -17,6 +17,7 @@ app = Flask(__name__)
 # league_id = 2833
 
 
+@app.route('/', methods=['GET'])
 @app.route('/', methods=['GET'])
 def index():
 
@@ -38,9 +39,10 @@ def test_page(league_id):
 
 @app.route('/fixture/<int:fixture_id>')
 def fixture_events_page(fixture_id):
+    fixture_stats = FixturesTable(fixture.build_fixture_stats(fixture_id))
     fixture_events = EventsTable(fixture.populate_table_data(fixture_id))
 
-    return render_template('fixture_events.html', methods=['GET'], fixture_events=fixture_events)
+    return render_template('fixture_events.html', methods=['GET'], fixture_stats=fixture_stats, fixture_events=fixture_events)
 
 
 if __name__ == "__main__":
