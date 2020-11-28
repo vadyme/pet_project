@@ -39,9 +39,12 @@ def get_specific_matchday_fixtures(league_id, matchday_id):
     for Fixture in all_fixtures:
         if Fixture.matchday.split(' - ')[-1] == matchday_id.split('_')[-1]:
             # TODO: if fixture is live, provide correspondent details
-            # if is_live_fixture(Fixture):
-            #     live_fixture = live_fixture_data(Fixture)
-            #     matchday_fixtures.append(live_fixture)
+            if is_live_fixture(Fixture):
+
+                live_fixture = live_fixture_data(Fixture)
+                Fixture.score = live_fixture.score
+                Fixture.status_short = live_fixture.status_short
+                # matchday_fixtures.append(live_fixture)
             matchday_fixtures.append(Fixture)
 
     return matchday_fixtures
@@ -65,11 +68,17 @@ def get_matchday_by_date(date):
     leagues = [2755, 2833, 2857, 2790]
     fixtures = []
     for id in leagues:
-        fs = get_fixtures_by_league_and_date(id, date)
+        fs = build_fixtures_by_date_table(get_fixtures_by_league_and_date(id, date))
         for fixture in fs:
+            if is_live_fixture(fixture):
+
+                live_fixture = live_fixture_data(fixture)
+                fixture.score = live_fixture.score
+                fixture.status_short = live_fixture.status_short
+                # fixtures.append(live_fixture)
             fixtures.append(fixture)
     # sorted_fixtures = sorted(fixtures, key=lambda x: x.timestamp)
-    return build_fixtures_by_date_table(fixtures)
+    return fixtures
 
 # TODO: this is the same exact method as in fixture_table, with the exception of a single line. REFACTOR!!
 
