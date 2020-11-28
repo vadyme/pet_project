@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Test Page</title>
-    <link rel="stylesheet" href="/static/styles.css">>
+    <link rel="stylesheet" href="/static/styles.css">
 
 </head>
 <body>
@@ -14,7 +14,19 @@
     <a href="./test/2847"> Segunda </a>
     <a href="./test/2794"> Championship </a>
 </div>
-
+<div class = "calendar">
+    <table>
+        <tr>
+            {% for day in calendar %}
+                {% for key, value in day.items() %}
+                    <td>
+                        <a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}} {{value.split('-')[2]}} </a>
+                    </td>
+                {% endfor %}
+            {% endfor %}
+        </tr>
+    </table>
+</div>
 <div class = "matchday">
     {{current_matchday_fixtures}}
 </div>

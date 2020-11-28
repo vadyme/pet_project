@@ -9,6 +9,8 @@ from standing_table import StandingTable
 from Topscorers import TopscorersTable
 from fixture import EventsTable, FixtureBriefInfo
 from league import map_league_name_to_id
+from week_dates_range import get_week_dates
+from datetime import date
 
 app = Flask(__name__)
 
@@ -18,14 +20,21 @@ app = Flask(__name__)
 
 # league_id = 2833
 
-
-@app.route('/', methods=['GET'])
 @app.route('/', methods=['GET'])
 def index():
-    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(
-        matchday.get_current_matchday_for_multiple_leagues())
+    today = str(date.today())
+    calendar = get_week_dates()
+    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(today))
 
-    return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures)
+    return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
+
+
+@app.route('/matchday/<date>')
+def get_matchday_by_date(date):
+    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(date))
+    calendar = get_week_dates()
+
+    return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
 
 
 @app.route('/league/<league_name>')
