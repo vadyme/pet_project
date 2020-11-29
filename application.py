@@ -3,11 +3,12 @@ from flask import Flask, render_template
 import Topscorers
 import fixture
 import standing_table
-import fixtures_table, matchday
+import fixtures_table
+import matchday
 from fixtures_table import FixturesTable
 from standing_table import StandingTable
 from Topscorers import TopscorersTable
-from fixture import EventsTable, FixtureBriefInfo
+from fixture import EventsTable
 from league import map_league_name_to_id
 from week_dates_range import get_week_dates
 from datetime import date
@@ -18,7 +19,6 @@ app = Flask(__name__)
 # json_file = './models/standing_table.json'
 # fixtures_json = './models/response_get_fixtures_by_league_id.json'
 
-# league_id = 2833
 
 @app.route('/', methods=['GET'])
 def index():
@@ -29,9 +29,9 @@ def index():
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
 
 
-@app.route('/matchday/<date>')
-def get_matchday_by_date(date):
-    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(date))
+@app.route('/matchday/<match_date>')
+def get_matchday_by_date(match_date):
+    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(match_date))
     calendar = get_week_dates()
 
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
