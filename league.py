@@ -1,4 +1,4 @@
-available_leagues = {'deu_bundesliga': 2755, 'esp_primera': 2833, 'ita_serie_a': 2857, 'eng_premiere_league': 2790}
+available_leagues = {'esp_segunda': 2847, 'eng_championship': 2794,'deu_bundesliga': 2755, 'esp_primera': 2833, 'ita_serie_a': 2857, 'eng_premiere_league': 2790}
 
 
 def map_league_name_to_id(league_name):
