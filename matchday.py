@@ -17,17 +17,14 @@ def get_current_matchday_id(league_id):
 
 
 def get_current_matchday_fixtures(league_id):
-    current_matchday = api_client.get_current_round_by_league_id(league_id)
-    # {'results': 1, 'fixtures': ['Regular_Season_-_7']}
-    current_matchday_id = current_matchday['api']['fixtures'][0].split(' - ')[-1]
+    current_matchday_id = get_current_matchday_id(league_id)
     current_matchday_fixtures = get_specific_matchday_fixtures(league_id, current_matchday_id)
-    # current_matchday_fixtures = get_specific_matchday_fixtures(league_id, '9')
+
     return current_matchday_fixtures
 
 
 def get_fixtures_by_league_and_date(league_id, date):
     data = api_client.get_fixtures_by_league_and_date(league_id, date)
-
     fixtures = data['api']['fixtures']
 
     return fixtures
@@ -37,31 +34,29 @@ def get_specific_matchday_fixtures(league_id, matchday_id):
     # fixture_data = get_fixture_data(league_id)
     all_fixtures = build_fixtures_table(league_id)
     matchday_fixtures = []
-    for Fixture in all_fixtures:
-        if Fixture.matchday.split(' - ')[-1] == matchday_id.split('_')[-1]:
-            # TODO: if fixture is live, provide correspondent details
-            if is_live_fixture(Fixture):
-                live_fixture = live_fixture_data(Fixture)
-                Fixture.score = live_fixture.score
-                Fixture.status_short = live_fixture.status_short
-                # matchday_fixtures.append(live_fixture)
-            matchday_fixtures.append(Fixture)
+    for fixture in all_fixtures:
+        if fixture.matchday.split(' - ')[-1] == matchday_id.split('_')[-1]:
+            if is_live_fixture(fixture):
+                live_fixture = live_fixture_data(fixture)
+                fixture.score = live_fixture.score
+                fixture.status_short = live_fixture.status_short
+            matchday_fixtures.append(fixture)
 
     return matchday_fixtures
 
 
-def get_current_matchday_for_multiple_leagues():
-    # TODO: this is very expensive in terms of a number of API calls. Use DB instead.
-    leagues = [2755, 2833, 2857, 2790]
-    fixtures = []
-    for league in leagues:
-        fs = get_current_matchday_fixtures(league)
-        for fixture in fs:
-            fixtures.append(fixture)
-
-    sorted_fixtures = sorted(fixtures, key=lambda x: x.timestamp)
-
-    return sorted_fixtures
+# def get_current_matchday_for_multiple_leagues():
+#     # TODO: this is very expensive in terms of a number of API calls. Use DB instead.
+#     leagues = [2755, 2833, 2857, 2790]
+#     fixtures = []
+#     for league in leagues:
+#         fs = get_current_matchday_fixtures(league)
+#         for fixture in fs:
+#             fixtures.append(fixture)
+#     # TODO: sort fixtures by kick-off time
+#     sorted_fixtures = sorted(fixtures, key=lambda x: x.fixture_id)
+#
+#     return sorted_fixtures
 
 
 def get_matchday_by_date(date):
@@ -101,6 +96,8 @@ def build_fixtures_by_date_table(fixtures):
         country_flag = row['league']['flag']
         league_id = row['league_id']
         league_name = row['league']['name']
+
+        # TODO: render the below in browser, not right here
 
         fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
             '<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, Markup(
