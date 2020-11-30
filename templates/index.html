@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Test Page</title>
-    <link rel="stylesheet" href="/static/styles.css">
+{% extends "layout.html" %}
+{% block title %} Today Matches {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
 
-</head>
-<body>
-<div class = "middle-well">
-    <a href="./league/deu_bundesliga"> Bundesliga </a>
-    <div></div>
-    <a href="./league/ita_serie_a"> Serie A </a>
-    <div></div>
-    <a href="./league/esp_primera"> Primera </a>
-    <div></div>
-    <a href="./league/esp_segunda"> Segunda </a>
-    <div></div>
-    <a href="./league/eng_championship"> Championship </a>
-</div>
+{% block menu %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
 <div class = "calendar">
     <table>
         <tr>
@@ -34,6 +24,4 @@
 <div class = "matchday">
     {{current_matchday_fixtures}}
 </div>
-
-</body>
-</html>
+{% endblock %}

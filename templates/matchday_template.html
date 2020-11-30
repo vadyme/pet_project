@@ -1,37 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Test Page</title>
-    <link rel="stylesheet" href="/static/styles.css">>
+{% extends "layout.html" %}
+{% block title %} Today Matches {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
 
-</head>
-<body>
-<div class = "middle-well">
-    <a href="./deu_bundesliga"> Bundesliga </a>
-    <a href="./ita_serie_a"> Serie A </a>
-    <a href="./esp_primera"> Primera </a>
-    <a href="./esp_segunda"> Segunda </a>
-    <a href="./eng_championship"> Championship </a>
-</div>
-<div class = "header">
-    MATCHDAY {{matchday_id}}
-</div>
-<div class = "matchday">
-    {{fixtures}}
-</div>
-<div class = "header">
-    STANDINGS
-</div>
-<div class = "standings_table">
-    {{table}}
-</div>
-<div class = "header">
-    TOP SCORERS
-</div>
-<div class = "topscorers">
-    {{topscorers}}
-</div>
-
-</body>
-</html>
+{% block menu %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class = "header">
+        MATCHDAY {{matchday_id}}
+    </div>
+    <div class = "matchday">
+        {{fixtures}}
+    </div>
+    <div class = "header">
+        STANDINGS
+    </div>
+    <div class = "standings_table">
+        {{table}}
+    </div>
+    <div class = "header">
+        TOP SCORERS
+    </div>
+    <div class = "topscorers">
+        {{topscorers}}
+    </div>
+{% endblock %}

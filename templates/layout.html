@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/static/styles.css">
+        <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div>{% block menu %}
+        <div class = "middle-well">
+            <a href="/league/deu_bundesliga"> Bundesliga </a>
+            <a href="/league/ita_serie_a"> Serie A </a>
+            <a href="/league/esp_primera"> Primera </a>
+            <a href="/league/esp_segunda"> Segunda </a>
+            <a href="/league/eng_championship"> Championship </a>
+        </div>
+        {% endblock %}
+    </div>
+    <div id = "content">
+        {% block content %}{% endblock %}
+    </div>
+    <div id="footer">
+      {% block footer %}
+        vadyme | 2020
+      {% endblock %}
+    </div>
+  </body>
+</html>
