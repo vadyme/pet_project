@@ -17,7 +17,7 @@ function goBack() {
 <table class="fixt-stat-table">
 <tbody>
 	<tr class = "gen-info">
-		<td div="wide-td">{{league_name}}</td>
+		<td div="wide-td"><a href = "/league/{{urlified_league_name}}">{{league_name}}</a></td>
 		<td div="narrow-td"></td>
 		<td div="wide-td">{{timestamp}}</td>
 		<td div="narrow-td"></td>
@@ -49,7 +49,30 @@ function goBack() {
 </table>
 
 <div class = "matchday">
-    {{fixture_events}}
+	<table>
+		<tbody>
+			<tr>
+				{% for event in fixture_events %}
+					{% if event.teamName == home_team_name %}
+						<td class="home-team">{{event.player}}</td>
+						<td class="home-team">{{event.type}}</td>
+						<td class="text-center">{{event.elapsed}}</td>
+						<td></td>
+						<td></td>
+					{% else %}
+						<td></td>
+						<td></td>
+						<td class="text-center">{{event.elapsed}}</td>
+						<td class="away-team">{{event.type}}</td>
+						<td class="away-team">{{event.player}}</td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+
+		</tbody>
+	</table>
+
+
 </div>
 </body>
 </html>
