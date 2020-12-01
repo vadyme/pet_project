@@ -6,6 +6,7 @@ import dateutil.parser
 from datetime import datetime
 from fixture import FixtureBriefInfo
 from kickoff_time import KickOffTime
+from league import urlify_league_name
 
 
 # TODO: add Events
@@ -61,6 +62,8 @@ def get_fixtures_by_league_id(input):
     return fixtures_data
 
 
+#TODO: the below has a similar implementation elsewere in the code. find and refactor.
+
 def build_fixtures_table(i):
     # TODO: there is really no need to call this API often. Since the schedule is pre-defined for the entire season,
     # just save it somewhere and read, periodically updating if there are any changes to schedule.
@@ -83,12 +86,13 @@ def build_fixtures_table(i):
         country_flag = row['league']['flag']
         league_id = row['league_id']
         league_name = row['league']['name']
+        urlified_league_name = urlify_league_name(league_name)
 
         fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
             '<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, Markup('<a href = "/fixture/' + str(fixture_id) + '">' + str(score) + '</a>'), Markup(
             '<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short,
                                                    matchday, fixture_id, Markup(
-                '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id))
+                '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id, urlified_league_name))
     return fixture_table_rows
 
 

@@ -3,6 +3,7 @@
 import api_client
 from fixtures_table import build_fixtures_table, is_live_fixture, live_fixture_data
 from fixture import FixtureBriefInfo, datetime_to_readable
+from league import urlify_league_name
 from flask import Markup
 
 
@@ -96,22 +97,7 @@ def build_fixtures_by_date_table(fixtures):
         country_flag = row['league']['flag']
         league_id = row['league_id']
         league_name = row['league']['name']
-
-        # TODO: render the below in browser, not right here
-
-        # fixture_table_rows.append(FixtureBriefInfo(
-        #   datetime_to_readable(timestamp).date,
-        #   Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'),
-        #   home_team_name,
-        #   Markup('<a href = "/fixture/' + str(fixture_id) + '">' + str(score) + '</a>'),
-        #   Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'),
-        #   away_team_name,
-        #   status_short,
-        #   matchday,
-        #   fixture_id,
-        #   Markup('<img src =' + country_flag + ' style="width:20px;height:20px;">'),
-        #   Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'),
-        #   league_id))
+        urlified_league_name = urlify_league_name(league_name)
 
         fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp),
                                                    home_team_logo,
@@ -124,7 +110,8 @@ def build_fixtures_by_date_table(fixtures):
                                                    fixture_id,
                                                    country_flag,
                                                    league_name,
-                                                   league_id)
+                                                   league_id,
+                                                   urlified_league_name)
                                   )
 
     return fixture_table_rows

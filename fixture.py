@@ -9,11 +9,12 @@ from flask import Markup
 from datetime import datetime
 
 from kickoff_time import KickOffTime
+from league import urlify_league_name
 
 
 class FixtureBriefInfo(object):
     def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short,
-                 matchday, id, country_flag, league_name, league_id):
+                 matchday, id, country_flag, league_name, league_id, urlified_league_name):
         self.id = id
         self.timestamp = timestamp
         self.home_team_name = home_team_name
@@ -26,10 +27,11 @@ class FixtureBriefInfo(object):
         self.country_flag = country_flag
         self.league_id = league_id
         self.league_name = league_name
+        self.urlified_league_name = urlified_league_name
 
 
+# TODO: find the similar code and reuse
 def build_fixture_stats(fixture_id):
-    # fixture = [] # TODO: this is stupid, don't use list here, research!
     fixture_info = api_client.get_fixture_by_id(fixture_id)
     fixture_stats = fixture_info['api']['fixtures'][0]
     fixture_id = fixture_stats['fixture_id']
@@ -46,6 +48,7 @@ def build_fixture_stats(fixture_id):
     country_flag = fixture_stats['league']['flag']
     league_id = fixture_stats['league_id']
     league_name = fixture_stats['league']['name']
+    urlified_league_name = urlify_league_name(league_name)
 
     # return FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
     #         '<img src =' + home_team_logo + ' style="width:70px;height:70px;">'), home_team_name, Markup('<a href = "/fixture/'+ str(fixture_id) + '">' + str(score) +'</a>'), Markup(
@@ -55,7 +58,7 @@ def build_fixture_stats(fixture_id):
 
     return FixtureBriefInfo(datetime_to_readable(timestamp).date, home_team_logo, home_team_name, str(score),
                             away_team_logo, away_team_name, status_short, matchday, fixture_id, country_flag, league_name,
-                            league_id)
+                            league_id, urlified_league_name)
 
     # return fixture
 

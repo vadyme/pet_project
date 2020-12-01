@@ -34,7 +34,7 @@
                 <td class="away-team">{{fixture.away_team_name}}</td>
                 <td class="text-center">{{fixture.status_short}}</td>
                 <td class="img-center"><img src={{fixture.country_flag}} style="width:20px;height:20px;"></td>
-                <td class="text-left"><a href="/league/{{fixture.league_id}}">{{fixture.league_name}}</a></td>
+                <td class="text-left"><a href="/league/{{fixture.urlified_league_name}}">{{fixture.league_name}}</a></td>
             </tr>
         {% endfor %}
         </tbody>
