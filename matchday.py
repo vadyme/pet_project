@@ -70,8 +70,8 @@ def get_matchday_by_date(date):
                 fixture.score = live_fixture.score
                 fixture.status_short = live_fixture.status_short
             fixtures.append(fixture)
-    # sorted_fixtures = sorted(fixtures, key=lambda x: x.timestamp)
-    return fixtures
+    sorted_fixtures = sorted(fixtures, key=lambda x: x.timestamp.time)
+    return sorted_fixtures
 
 
 # TODO: this is the same exact method as in fixture_table, with the exception of a single line. REFACTOR!!
@@ -99,11 +99,32 @@ def build_fixtures_by_date_table(fixtures):
 
         # TODO: render the below in browser, not right here
 
-        fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
-            '<img src =' + home_team_logo + ' style="width:20px;height:20px;">'), home_team_name, Markup(
-            '<a href = "/fixture/' + str(fixture_id) + '">' + str(score) + '</a>'), Markup(
-            '<img src =' + away_team_logo + ' style="width:20px;height:20px;">'), away_team_name, status_short,
-                                                   matchday, fixture_id, Markup(
-                '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup(
-                '<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id))
+        # fixture_table_rows.append(FixtureBriefInfo(
+        #   datetime_to_readable(timestamp).date,
+        #   Markup('<img src =' + home_team_logo + ' style="width:20px;height:20px;">'),
+        #   home_team_name,
+        #   Markup('<a href = "/fixture/' + str(fixture_id) + '">' + str(score) + '</a>'),
+        #   Markup('<img src =' + away_team_logo + ' style="width:20px;height:20px;">'),
+        #   away_team_name,
+        #   status_short,
+        #   matchday,
+        #   fixture_id,
+        #   Markup('<img src =' + country_flag + ' style="width:20px;height:20px;">'),
+        #   Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'),
+        #   league_id))
+
+        fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp),
+                                                   home_team_logo,
+                                                   home_team_name,
+                                                   score,
+                                                   away_team_logo,
+                                                   away_team_name,
+                                                   status_short,
+                                                   matchday,
+                                                   fixture_id,
+                                                   country_flag,
+                                                   league_name,
+                                                   league_id)
+                                  )
+
     return fixture_table_rows

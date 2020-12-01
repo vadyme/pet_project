@@ -55,6 +55,7 @@ table td {
 .header {
   text-align: center;
   font-weight: bold;
+  font-color: grey;
 }
 
 .fixt-stat-table {
@@ -63,7 +64,7 @@ table td {
 	border-bottom-width: 1px;
 	border-left-width: 1px;
 	border-collapse: collapse;
-	width: 100%;
+	width: 55%;
 }
 
 .gen-info {
@@ -82,9 +83,32 @@ table td {
 	padding-top: 30px;
 }
 
+.img-center {
+  text-align: center;
+  width: 25px;
+  height: 25px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+
 .team-names {
 	height: 20px;
 	text-align: center;
+}
+
+.home-team {
+  text-align: right;
+}
+
+.away-team {
+  text-align: left;
 }
 
 .fixture-progress {
@@ -96,4 +120,9 @@ table td {
 
 #wide-td {
 	width: 20px;
+}
+
+#footer {
+  text-align: center;
+  color: grey;
 }

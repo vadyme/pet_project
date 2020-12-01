@@ -14,7 +14,7 @@
             {% for day in calendar %}
                 {% for key, value in day.items() %}
                     <td>
-                        <a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}} {{value.split('-')[2]}} </a>
+                        <a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}}/{{value.split('-')[2]}} </a>
                     </td>
                 {% endfor %}
             {% endfor %}
@@ -22,6 +22,22 @@
     </table>
 </div>
 <div class = "matchday">
-    {{current_matchday_fixtures}}
+    <table>
+        <tbody>
+        {% for fixture in current_matchday_fixtures %}
+            <tr>
+                <td class="text-center">{{fixture.timestamp.time}}</td>
+                <td class="home-team">{{fixture.home_team_name}}</td>
+                <td class="img-center"><img class="img-center" src={{fixture.home_team_logo}}></td>
+                <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.score}}</a></td>
+                <td class="img-center"><img class="img-center" src={{fixture.away_team_logo}}></td>
+                <td class="away-team">{{fixture.away_team_name}}</td>
+                <td class="text-center">{{fixture.status_short}}</td>
+                <td class="img-center"><img src={{fixture.country_flag}} style="width:20px;height:20px;"></td>
+                <td class="text-left"><a href="/league/{{fixture.league_id}}">{{fixture.league_name}}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

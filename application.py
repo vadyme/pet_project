@@ -24,17 +24,27 @@ app = Flask(__name__)
 def index():
     today = str(date.today())
     calendar = get_week_dates()
-    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(today))
+    current_matchday_fixtures = matchday.get_matchday_by_date(today)
 
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
+    # return render_template('index.html')
 
 
 @app.route('/matchday/<match_date>')
 def get_matchday_by_date(match_date):
-    current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(match_date))
+    # current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(match_date))
+    current_matchday_fixtures = matchday.get_matchday_by_date(match_date)
     calendar = get_week_dates()
 
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
+
+
+@app.route('/matchday/test/<match_date>')
+def get_matchday_by_date_test(match_date):
+    current_matchday_fixtures = matchday.get_matchday_by_date(match_date)
+    calendar = get_week_dates()
+
+    return render_template('index_test.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
 
 
 @app.route('/league/<league_name>')
