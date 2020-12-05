@@ -10,6 +10,7 @@ from datetime import datetime
 
 from kickoff_time import KickOffTime
 from league import urlify_league_name
+import dao
 
 
 class FixtureBriefInfo(object):
@@ -32,9 +33,17 @@ class FixtureBriefInfo(object):
 
 # TODO: find the similar code and reuse
 def build_fixture_stats(fixture_id):
-    fixture_info = api_client.get_fixture_by_id(fixture_id)
-    fixture_stats = fixture_info['api']['fixtures'][0]
-    fixture_id = fixture_stats['fixture_id']
+
+    # gets details from API
+    # fixture_info = api_client.get_fixture_by_id(fixture_id)
+    # fixture_stats = fixture_info['api']['fixtures'][0]
+
+    # gets details from the DB
+    fixture_info = dao.get_fixture_details(fixture_id)
+
+    fixture_stats = fixture_info[0]
+
+    # fixture_id = fixture_stats['fixture_id']
     timestamp = fixture_stats['event_date']
     home_team = fixture_stats['homeTeam']
     away_team = fixture_stats['awayTeam']
@@ -160,6 +169,15 @@ def populate_table_data(i):
         detail = row['detail']
         comments = row['comments']
 
-        items.append(Event(elapsed, elapsed_plus, team_id, team_name, player_id, player, assist_id, assist, type, detail,
+        items.append(Event(elapsed,
+                           elapsed_plus,
+                           team_id,
+                           team_name,
+                           player_id,
+                           player,
+                           assist_id,
+                           assist,
+                           type,
+                           detail,
                            comments))
     return items

@@ -2,8 +2,9 @@
 
 import api_client
 from fixtures_table import build_fixtures_table, is_live_fixture, live_fixture_data
-from fixture import FixtureBriefInfo, datetime_to_readable
+import fixture
 from league import urlify_league_name
+import dao
 from flask import Markup
 
 
@@ -59,6 +60,12 @@ def get_specific_matchday_fixtures(league_id, matchday_id):
 #
 #     return sorted_fixtures
 
+def get_fixtures_by_date(date):
+    fixtures = dao.get_fixtures_by_date(date)
+    fs = build_fixtures_by_date_table(fixtures)
+    sorted_fixtures = sorted(fs, key=lambda x: x.timestamp.time)
+
+    return sorted_fixtures
 
 def get_matchday_by_date(date):
     leagues = [2755, 2833, 2857, 2790]
@@ -90,7 +97,7 @@ def build_fixtures_by_date_table(fixtures):
         home_team_logo = home_team['logo']
         away_team_name = away_team['team_name']
         away_team_logo = away_team['logo']
-        score = row['score']['fulltime'] if row['score']['fulltime'] is not None else datetime_to_readable(
+        score = row['score']['fulltime'] if row['score']['fulltime'] is not None else fixture.datetime_to_readable(
             timestamp).time
         status_short = row['statusShort']
         matchday = row['round']
@@ -99,7 +106,7 @@ def build_fixtures_by_date_table(fixtures):
         league_name = row['league']['name']
         urlified_league_name = urlify_league_name(league_name)
 
-        fixture_table_rows.append(FixtureBriefInfo(datetime_to_readable(timestamp),
+        fixture_table_rows.append(fixture.FixtureBriefInfo(fixture.datetime_to_readable(timestamp),
                                                    home_team_logo,
                                                    home_team_name,
                                                    score,

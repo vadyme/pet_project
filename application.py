@@ -3,12 +3,10 @@ from flask import Flask, render_template
 import Topscorers
 import fixture
 import standing_table
-import fixtures_table
 import matchday
 from fixtures_table import FixturesTable
 from standing_table import StandingTable
 from Topscorers import TopscorersTable
-from fixture import EventsTable
 from league import map_league_name_to_id
 from week_dates_range import get_week_dates
 from datetime import date
@@ -16,25 +14,19 @@ from datetime import date
 app = Flask(__name__)
 
 
-# json_file = './models/standing_table.json'
-# fixtures_json = './models/response_get_fixtures_by_league_id.json'
-
-
 @app.route('/', methods=['GET'])
 def index():
     today = str(date.today())
     calendar = get_week_dates()
-    current_matchday_fixtures = matchday.get_matchday_by_date(today)
+    matchday_fixtures = matchday.get_fixtures_by_date(today)
 
-    return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
-    # return render_template('index.html')
+    return render_template('index.html', matchday_fixtures=matchday_fixtures, calendar=calendar)
 
 
 @app.route('/matchday/<match_date>')
 def get_matchday_by_date(match_date):
-    # current_matchday_fixtures = fixtures_table.MultipleLeaguesFixturesTable(matchday.get_matchday_by_date(match_date))
-    current_matchday_fixtures = matchday.get_matchday_by_date(match_date)
     calendar = get_week_dates()
+    current_matchday_fixtures = matchday.get_fixtures_by_date(match_date)
 
     return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
 
@@ -94,6 +86,21 @@ def fixture_events_page(fixture_id):
                            home_team_logo=home_team_logo, score=score, away_team_logo=away_team_logo,
                            home_team_name=home_team_name, elapsed=elapsed, away_team_name=away_team_name,
                            fixture_events=fixture_events, urlified_league_name=urlified_league_name)
+
+
+# @app.route("/update_db")
+# def update():
+#     league_ids = [2755, 2833, 2857, 2790]
+#     for l_id in league_ids:
+#         fixtures = get_fixtures_by_league_id(l_id)
+#         db.db.fixtures_db_collection.insert_many(fixtures)
+#     return "dbUpdated: True"
+
+
+# @app.route("/test_db_connection")
+# def test():
+#     db.db.fixtures_db_collection.insert_one({"isLive": "True"})
+#     return "It's alive!"
 
 
 if __name__ == "__main__":
