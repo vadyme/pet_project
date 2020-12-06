@@ -101,7 +101,7 @@ def build_fixtures_by_date_table(fixtures):
             timestamp).time
         status_short = row['statusShort']
         matchday = row['round']
-        country_flag = row['league']['flag']
+        country_flag = row['league']['flag'] if row['league']['flag'] is not None else row['league']['logo']
         league_id = row['league_id']
         league_name = row['league']['name']
         urlified_league_name = urlify_league_name(league_name)
