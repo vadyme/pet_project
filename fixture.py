@@ -49,7 +49,7 @@ def create_fixture_object(fixture_id):
     score = fixture_stats['score']['fulltime'] if fixture_stats['score']['fulltime'] is not None else datetime_to_readable(timestamp).time
     status_short = fixture_stats['statusShort']
     matchday = fixture_stats['round']
-    country_flag = fixture_stats['league']['flag']
+    country_flag = fixture_stats['league']['flag'] if fixture_stats['league']['flag'] is not None else fixture_stats['league']['logo']
     league_id = fixture_stats['league_id']
     league_name = fixture_stats['league']['name']
     urlified_league_name = urlify_league_name(league_name)
