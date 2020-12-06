@@ -24,7 +24,7 @@
 <div class = "matchday">
     <table>
         <tbody>
-        {% for fixture in current_matchday_fixtures %}
+        {% for fixture in matchday_fixtures %}
             <tr>
                 <td class="text-center">{{fixture.timestamp.time}}</td>
                 <td class="home-team">{{fixture.home_team_name}}</td>

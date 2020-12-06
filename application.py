@@ -26,9 +26,9 @@ def index():
 @app.route('/matchday/<match_date>')
 def get_matchday_by_date(match_date):
     calendar = get_week_dates()
-    current_matchday_fixtures = matchday.get_fixtures_by_date(match_date)
+    matchday_fixtures = matchday.get_fixtures_by_date(match_date)
 
-    return render_template('index.html', current_matchday_fixtures=current_matchday_fixtures, calendar=calendar)
+    return render_template('index.html', matchday_fixtures=matchday_fixtures, calendar=calendar)
 
 
 @app.route('/matchday/test/<match_date>')
