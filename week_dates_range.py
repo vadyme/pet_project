@@ -5,9 +5,11 @@ def get_week_dates():
     date_range = []
 
     dt = date.today()
-    start = dt - timedelta(days=(dt.weekday())+1)
-    end = start + timedelta(days=6)
-    while start <= end:
+    # start = dt - timedelta(days=(dt.weekday())+1)
+    start = dt - timedelta(days=4)
+    end = dt + timedelta(days=3)
+    # end = start + timedelta(days=6)
+    while start < end:
         start += timedelta(days=1)
         str_start = str(start)
         day_name = get_day_name(str_start)
