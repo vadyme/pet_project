@@ -18,3 +18,11 @@ def get_fixture_details(fixture_id):
     data = list(db.fixtures_db_collection.find(q))
 
     return data
+
+
+def get_fixtures_by_league_and_round(league_id, round_id):
+    # {"league_id": 2755, "round": "Regular Season - 10"}
+    q = {"league_id": league_id, "round": round_id}
+    data = list(db.fixtures_db_collection.find(q))
+
+    return data

@@ -12,8 +12,23 @@
         MATCHDAY {{matchday_id}}
     </div>
     <div class = "matchday">
-        {{fixtures}}
+    <table>
+        <tbody>
+        {% for fixture in fixtures %}
+            <tr>
+                <td class="text-center">{{fixture.timestamp.date}}</td>
+                <td class="home-team">{{fixture.home_team_name}}</td>
+                <td class="img-center"><img class="img-center" src={{fixture.home_team_logo}}></td>
+                <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.score}}</a></td>
+                <td class="img-center"><img class="img-center" src={{fixture.away_team_logo}}></td>
+                <td class="away-team">{{fixture.away_team_name}}</td>
+                <td class="text-center">{{fixture.status_short}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     </div>
+
     <div class = "header">
         STANDINGS
     </div>

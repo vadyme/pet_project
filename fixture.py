@@ -1,19 +1,15 @@
 import json
-
 import dateutil
-
+from dateutil import parser
 import api_client
 from flask_table import Table, Col
-from flask import Markup
-
 from datetime import datetime
-
 from kickoff_time import KickOffTime
 from league import urlify_league_name
 import dao
 
 
-class FixtureBriefInfo(object):
+class Fixture(object):
     def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short,
                  matchday, id, country_flag, league_name, league_id, urlified_league_name):
         self.id = id
@@ -32,7 +28,7 @@ class FixtureBriefInfo(object):
 
 
 # TODO: find the similar code and reuse
-def build_fixture_stats(fixture_id):
+def create_fixture_object(fixture_id):
 
     # gets details from API
     # fixture_info = api_client.get_fixture_by_id(fixture_id)
@@ -43,7 +39,6 @@ def build_fixture_stats(fixture_id):
 
     fixture_stats = fixture_info[0]
 
-    # fixture_id = fixture_stats['fixture_id']
     timestamp = fixture_stats['event_date']
     home_team = fixture_stats['homeTeam']
     away_team = fixture_stats['awayTeam']
@@ -59,22 +54,26 @@ def build_fixture_stats(fixture_id):
     league_name = fixture_stats['league']['name']
     urlified_league_name = urlify_league_name(league_name)
 
-    # return FixtureBriefInfo(datetime_to_readable(timestamp).date, Markup(
-    #         '<img src =' + home_team_logo + ' style="width:70px;height:70px;">'), home_team_name, Markup('<a href = "/fixture/'+ str(fixture_id) + '">' + str(score) +'</a>'), Markup(
-    #         '<img src =' + away_team_logo + ' style="width:70px;height:70px;">'), away_team_name, status_short,
-    #                                                matchday, fixture_id, Markup(
-    #             '<img src =' + country_flag + ' style="width:20px;height:20px;">'), Markup('<a href = "/league/' + str(league_id) + '">' + league_name + '</a>'), league_id)
-
-    return FixtureBriefInfo(datetime_to_readable(timestamp).date, home_team_logo, home_team_name, str(score),
-                            away_team_logo, away_team_name, status_short, matchday, fixture_id, country_flag, league_name,
-                            league_id, urlified_league_name)
-
-    # return fixture
+    return Fixture(
+        datetime_to_readable(timestamp),
+        home_team_logo,
+        home_team_name,
+        str(score),
+        away_team_logo,
+        away_team_name,
+        status_short,
+        matchday,
+        fixture_id,
+        country_flag,
+        league_name,
+        league_id,
+        urlified_league_name
+    )
 
 
 def datetime_to_readable(iso_datetime):
     # "event_date": "2020-09-12T14:00:00+00:00"
-    datetime_hr = datetime.strftime(dateutil.parser.isoparse(iso_datetime), '%d %b %H:%M')
+    datetime_hr = datetime.strftime(parser.isoparse(iso_datetime), '%d %b %H:%M')
     date_hr = f'{datetime_hr.split(" ")[0]} {datetime_hr.split(" ")[1]}'
     time_hr = f'{datetime_hr.split(" ")[2]}'
     return KickOffTime(date_hr, time_hr)
@@ -181,3 +180,22 @@ def populate_table_data(i):
                            detail,
                            comments))
     return items
+
+
+def is_live_fixture(fixture):
+    is_live = True if (fixture.status_short not in ['FT', 'NS']) else False
+    return is_live
+
+
+def live_fixture_data(fixture):
+    # TODO: save a response as an JSON file and use it instead of pulling the API
+    # TODO: bug - a live fixture is being displayed twice
+
+    f = api_client.get_fixture_by_id(fixture.id)
+    live_fixture_stats = f['api']['fixtures'][0]
+    fixture.status_short = live_fixture_stats['elapsed']
+    # "fulltime": "0-3"
+    live_score = '{}-{}'.format(str(live_fixture_stats['goalsHomeTeam']), str(live_fixture_stats['goalsAwayTeam']))
+    fixture.score = live_score
+
+    return fixture
