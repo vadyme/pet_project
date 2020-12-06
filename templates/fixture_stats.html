@@ -53,19 +53,21 @@ function goBack() {
 		<tbody>
 			<tr>
 				{% for event in fixture_events %}
-					{% if event.teamName == home_team_name %}
-						<td class="home-team">{{event.player}}</td>
-						<td class="home-team">{{event.type}}</td>
-						<td class="text-center">{{event.elapsed}}'</td>
-						<td></td>
-						<td></td>
-					{% else %}
-						<td></td>
-						<td></td>
-						<td class="text-center">{{event.elapsed}}'</td>
-						<td class="away-team">{{event.type}}</td>
-						<td class="away-team">{{event.player}}</td>
+					{% if event.type != "subst" %}
+						{% if event.teamName == home_team_name %}
+							<td class="home-team">{{event.player}}</td>
+							<td class="home-team">{{event.type}}</td>
+							<td class="text-center">{{event.elapsed}}'</td>
+							<td></td>
+							<td></td>
+						{% else %}
+							<td></td>
+							<td></td>
+							<td class="text-center">{{event.elapsed}}'</td>
+							<td class="away-team">{{event.type}}</td>
+							<td class="away-team">{{event.player}}</td>
 					{% endif %}
+				{% endif %}
 				</tr>
 				{% endfor %}
 
