@@ -10,10 +10,10 @@ import dao
 
 
 class Fixture(object):
-    def __init__(self, timestamp, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short,
-                 matchday, id, country_flag, league_name, league_id, urlified_league_name):
+    def __init__(self, kickoff_date, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short,
+                 matchday, id, country_flag, league_name, league_id, urlified_league_name, timestamp):
         self.id = id
-        self.timestamp = timestamp
+        self.kickoff_date = kickoff_date
         self.home_team_name = home_team_name
         self.home_team_logo = home_team_logo
         self.away_team_name = away_team_name
@@ -25,6 +25,7 @@ class Fixture(object):
         self.league_id = league_id
         self.league_name = league_name
         self.urlified_league_name = urlified_league_name
+        self.timestamp = timestamp
 
 
 # TODO: find the similar code and reuse
@@ -35,18 +36,20 @@ def create_fixture_object(fixture_id):
     # fixture_stats = fixture_info['api']['fixtures'][0]
 
     # gets details from the DB
+    # TODO: use this not only for DB fixtures, but for API fixtures as well
     fixture_info = dao.get_fixture_details(fixture_id)
 
     fixture_stats = fixture_info[0]
 
-    timestamp = fixture_stats['event_date']
+    kickoff_date = fixture_stats['event_date']
+    timestamp = fixture_stats['event_timestamp']
     home_team = fixture_stats['homeTeam']
     away_team = fixture_stats['awayTeam']
     home_team_name = home_team['team_name']
     home_team_logo = home_team['logo']
     away_team_name = away_team['team_name']
     away_team_logo = away_team['logo']
-    score = fixture_stats['score']['fulltime'] if fixture_stats['score']['fulltime'] is not None else datetime_to_readable(timestamp).time
+    score = fixture_stats['score']['fulltime'] if fixture_stats['score']['fulltime'] is not None else datetime_to_readable(kickoff_date).time
     status_short = fixture_stats['statusShort']
     matchday = fixture_stats['round']
     country_flag = fixture_stats['league']['flag'] if fixture_stats['league']['flag'] is not None else fixture_stats['league']['logo']
@@ -55,7 +58,7 @@ def create_fixture_object(fixture_id):
     urlified_league_name = urlify_league_name(league_name)
 
     return Fixture(
-        datetime_to_readable(timestamp),
+        datetime_to_readable(kickoff_date),
         home_team_logo,
         home_team_name,
         str(score),
@@ -67,7 +70,8 @@ def create_fixture_object(fixture_id):
         country_flag,
         league_name,
         league_id,
-        urlified_league_name
+        urlified_league_name,
+        timestamp
     )
 
 

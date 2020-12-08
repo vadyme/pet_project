@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+import time
 
 import api_client
 import fixture
@@ -16,11 +17,11 @@ def get_current_matchday_id(league_id):
 # TODO: is it really necessary to iterate through the entire season calendar to find current matchday fixtures?
 
 
-def get_current_matchday_fixtures(league_id):
-    current_matchday_id = get_current_matchday_id(league_id)
-    current_matchday_fixtures = get_fixtures_by_league_and_round(league_id, current_matchday_id)
-
-    return current_matchday_fixtures
+# def get_current_matchday_fixtures(league_id):
+#     current_matchday_id = get_current_matchday_id(league_id)
+#     current_matchday_fixtures = get_fixtures_by_league_and_round(league_id, current_matchday_id)
+#
+#     return current_matchday_fixtures
 
 
 def get_fixtures_by_league_and_date(league_id, date):
@@ -41,7 +42,19 @@ def get_fixtures_by_league_and_round(league_id, matchday_id):
 def get_fixtures_by_date(date):
     fixtures = dao.get_fixtures_by_date(date)
     fs = build_list_of_fixture_objects(fixtures)
-    sorted_fixtures = sorted(fs, key=lambda x: x.timestamp.time)
+
+    # if kickoff time is earlier than now and the game is NS, fetch the data from API and update the DB
+    # TODO: if there are multiple fixtures as above, think on sending asynchronous calls
+    now = time.time()
+    for f in fs:
+        print(now > f.timestamp)
+        if f.timestamp < now and f.status_short == 'NS':
+            fixture_update = api_client.get_fixture_by_id(f.id)
+            f.score = fixture_update['api']['fixtures'][0]['score']['fulltime']
+            f.status_short = fixture_update['api']['fixtures'][0]['statusShort']
+            # TODO: update the DB
+
+    sorted_fixtures = sorted(fs, key=lambda x: x.kickoff_date.time)
 
     return sorted_fixtures
 

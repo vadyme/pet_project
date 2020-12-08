@@ -63,7 +63,7 @@ def test_page(league_name):
 @app.route('/fixture/<int:fixture_id>')
 def fixture_events_page(fixture_id):
     fix = fixture.create_fixture_object(fixture_id)
-    timestamp = fix.timestamp
+    timestamp = fix.kickoff_date
     league_name = fix.league_name
     urlified_league_name = fix.urlified_league_name
     md = fix.matchday
