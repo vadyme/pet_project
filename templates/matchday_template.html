@@ -16,7 +16,7 @@
         <tbody>
         {% for fixture in fixtures %}
             <tr>
-                <td class="text-center">{{fixture.timestamp.date}}</td>
+                <td class="text-center">{{fixture.kickoff_date.date}}</td>
                 <td class="home-team">{{fixture.home_team_name}}</td>
                 <td class="img-center"><img class="img-center" src={{fixture.home_team_logo}}></td>
                 <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.score}}</a></td>
