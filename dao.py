@@ -26,3 +26,20 @@ def get_fixtures_by_league_and_round(league_id, round_id):
     data = list(db.fixtures_db_collection.find(q))
 
     return data
+
+
+def update_fixture_object(fixture_id, status_short, status, elapsed, goals_home_team, goals_away_team,
+                          score_ht, score_ft, score_et, score_pen ):
+
+    data = db.fixtures_db_collection.update_one({'fixture_id': fixture_id}, {"$set": {'statusShort': status_short,
+                                                                                       'status': status,
+                                                                                       'elapsed': elapsed,
+                                                                                       'goalsHomeTeam': goals_home_team,
+                                                                                       'goalsAwayTeam': goals_away_team,
+                                                                                       'score.halftime': score_ht,
+                                                                                       'score.fulltime': score_ft,
+                                                                                       'score.extratime': score_et,
+                                                                                       'score.penalty': score_pen
+                                                                              }})
+
+    return data

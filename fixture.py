@@ -11,7 +11,8 @@ import dao
 
 class Fixture(object):
     def __init__(self, kickoff_date, home_team_logo, home_team_name, score, away_team_logo, away_team_name, status_short,
-                 matchday, id, country_flag, league_name, league_id, urlified_league_name, timestamp):
+                 matchday, id, country_flag, league_name, league_id, urlified_league_name, timestamp,
+                 status, elapsed, goals_home_team, goals_away_team, score_ht, score_ft, score_et, score_pen):
         self.id = id
         self.kickoff_date = kickoff_date
         self.home_team_name = home_team_name
@@ -26,9 +27,17 @@ class Fixture(object):
         self.league_name = league_name
         self.urlified_league_name = urlified_league_name
         self.timestamp = timestamp
+        self.status = status
+        self.elapsed = elapsed
+        self.goals_home_team = goals_home_team
+        self.goals_away_team = goals_away_team
+        self.score_ht = score_ht
+        self.score_ft = score_ft
+        self.score_et = score_et
+        self.score_pen = score_pen
 
 
-# TODO: find the similar code and reuse
+    # TODO: find the similar code and reuse
 def create_fixture_object(fixture_id):
 
     # gets details from API
@@ -50,12 +59,21 @@ def create_fixture_object(fixture_id):
     away_team_name = away_team['team_name']
     away_team_logo = away_team['logo']
     score = fixture_stats['score']['fulltime'] if fixture_stats['score']['fulltime'] is not None else datetime_to_readable(kickoff_date).time
+    status = fixture_stats['status']
+    elapsed = fixture_stats['elapsed']
+    goals_home_team = fixture_stats['goalsHomeTeam']
+    goals_away_team = fixture_stats['goalsAwayTeam']
+
     status_short = fixture_stats['statusShort']
     matchday = fixture_stats['round']
     country_flag = fixture_stats['league']['flag'] if fixture_stats['league']['flag'] is not None else fixture_stats['league']['logo']
     league_id = fixture_stats['league_id']
     league_name = fixture_stats['league']['name']
     urlified_league_name = urlify_league_name(league_name)
+    score_ht = fixture_stats['score']['halftime']
+    score_ft = fixture_stats['score']['fulltime']
+    score_et = fixture_stats['score']['extratime']
+    score_pen = fixture_stats['score']['penalty']
 
     return Fixture(
         datetime_to_readable(kickoff_date),
@@ -71,7 +89,8 @@ def create_fixture_object(fixture_id):
         league_name,
         league_id,
         urlified_league_name,
-        timestamp
+        timestamp,
+        status, elapsed, goals_home_team, goals_away_team, score_ht, score_ft, score_et, score_pen
     )
 
 

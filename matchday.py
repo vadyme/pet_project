@@ -47,12 +47,23 @@ def get_fixtures_by_date(date):
     # TODO: if there are multiple fixtures as above, think on sending asynchronous calls
     now = time.time()
     for f in fs:
-        print(now > f.timestamp)
-        if f.timestamp < now and f.status_short == 'NS':
+        if f.timestamp < now and f.status != 'Match Finished':
+            print(f' "The game needs an update: " {f.id}')
             fixture_update = api_client.get_fixture_by_id(f.id)
-            f.score = fixture_update['api']['fixtures'][0]['score']['fulltime']
+            # f.score = fixture_update['api']['fixtures'][0]['score']['fulltime']
             f.status_short = fixture_update['api']['fixtures'][0]['statusShort']
-            # TODO: update the DB
+            f.status = fixture_update['api']['fixtures'][0]['status']
+            f.elapsed = fixture_update['api']['fixtures'][0]['elapsed']
+            f.goals_home_team = fixture_update['api']['fixtures'][0]['goalsHomeTeam']
+            f.goals_away_team = fixture_update['api']['fixtures'][0]['goalsAwayTeam']
+            f.score_ht = fixture_update['api']['fixtures'][0]['score']['halftime']
+            f.score_ft = fixture_update['api']['fixtures'][0]['score']['fulltime']
+            f.score_et = fixture_update['api']['fixtures'][0]['score']['extratime']
+            f.score_pen = fixture_update['api']['fixtures'][0]['score']['penalty']
+            # TODO: rework the fixture class, add all necessary fields; make sure to update all fields in DB
+            dao.update_fixture_object(f.id, f.status_short, f.status, f.elapsed, f.goals_home_team, f.goals_away_team,
+                                      f.score_ht, f.score_ft, f.score_et, f.score_pen)
+
 
     sorted_fixtures = sorted(fs, key=lambda x: x.kickoff_date.time)
 
