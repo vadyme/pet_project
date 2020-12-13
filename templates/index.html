@@ -26,7 +26,11 @@
                 <td class="text-center">{{fixture.kickoff_date.time}}</td>
                 <td class="home-team">{{fixture.home_team_name}}</td>
                 <td class="img-center"><img class="img-center" src={{fixture.home_team_logo}}></td>
+                {% if fixture.goals_home_team != None %}
                 <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.goals_home_team}}:{{fixture.goals_away_team}}</a></td>
+                {% else %}
+                <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.kickoff_date.time}}</a></td>
+                {% endif %}
                 <td class="img-center"><img class="img-center" src={{fixture.away_team_logo}}></td>
                 <td class="away-team">{{fixture.away_team_name}}</td>
                 {% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
