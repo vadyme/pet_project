@@ -51,19 +51,19 @@ def get_fixtures_by_date(date):
             print(f' "The game needs an update: " {f.id}')
             fixture_update = api_client.get_fixture_by_id(f.id)
             update = fixture_update['api']['fixtures'][0]
+            update_score = update['score']
             f.status_short = update['statusShort']
             f.status = update['status']
             f.elapsed = update['elapsed']
             f.goals_home_team = update['goalsHomeTeam']
             f.goals_away_team = update['goalsAwayTeam']
-            f.score_ht = update['halftime']
-            f.score_ft = update['fulltime']
-            f.score_et = update['extratime']
-            f.score_pen = update['penalty']
+            f.score_ht = update_score['halftime']
+            f.score_ft = update_score['fulltime']
+            f.score_et = update_score['extratime']
+            f.score_pen = update_score['penalty']
             # TODO: rework the fixture class, add all necessary fields; make sure to update all fields in DB
             dao.update_fixture_object(f.id, f.status_short, f.status, f.elapsed, f.goals_home_team, f.goals_away_team,
                                       f.score_ht, f.score_ft, f.score_et, f.score_pen)
-
 
     sorted_fixtures = sorted(fs, key=lambda x: x.kickoff_date.time)
 
