@@ -134,3 +134,10 @@ table td {
   font-weight: 600;
   background-color: #323C50;
 }
+
+header {
+    margin-top: 25px;
+    margin-bottom: 35px;
+   text-align: center;
+   font-size: 75px;
+}
