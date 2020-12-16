@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, json
+from werkzeug.exceptions import HTTPException
+from logging.config import dictConfig
 
 import Topscorers
 import fixture
@@ -10,6 +12,23 @@ from league import map_league_name_to_id
 from week_dates_range import get_week_dates
 from datetime import date
 
+
+dictConfig({
+    'version': 1,
+    'formatters': {'default': {
+        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+    }},
+    'handlers': {'wsgi': {
+        'class': 'logging.StreamHandler',
+        'stream': 'ext://flask.logging.wsgi_errors_stream',
+        'formatter': 'default'
+    }},
+    'root': {
+        'level': 'INFO',
+        'handlers': ['wsgi']
+    }
+})
+
 app = Flask(__name__)
 
 
@@ -19,6 +38,8 @@ def index():
     calendar = get_week_dates()
     matchday_fixtures = matchday.get_fixtures_by_date(today)
 
+    app.logger.info("Request to open index page")
+
     return render_template('index.html', matchday_fixtures=matchday_fixtures, calendar=calendar)
 
 
@@ -26,6 +47,8 @@ def index():
 def get_matchday_by_date(match_date):
     calendar = get_week_dates()
     matchday_fixtures = matchday.get_fixtures_by_date(match_date)
+
+    app.logger.info(f'Request to open matchday page {match_date}')
 
     return render_template('index.html', matchday_fixtures=matchday_fixtures, calendar=calendar)
 
@@ -40,11 +63,14 @@ def test_page(league_name):
         table = StandingTable(standing_table.build_standings_table(league_id))
         topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
 
+        app.logger.info(f'Request to open league page {league_name}')
+
         return render_template('matchday_template.html', methods=['GET'],
                                matchday_id=matchday_id, fixtures=matchday_fixtures,
                                table=table, topscorers=topscorers
                                )
     else:
+        app.logger.error("Page not found")
         return render_template('page_not_found.html')
 
 
