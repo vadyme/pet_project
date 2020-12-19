@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %} Today Matches {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<!--    <header>-->
+<!--        <a href="/">GOLAZO!</a>-->
+<!--    </header>-->
+    <div class="league-info">
+        <div id="league-name">{{league_name}}</div>
+        <!-- <div id="country-flag"><img src="index.png"></div> -->
+    </div>
+        <div id="league-menu">
+            <ul>
+
+              <li class="dropdown">
+                <a href="/league/{{ league_name }}" class="dropbtn">Results & Fixtures</a>
+                <div class="dropdown-content">
+                  <a href="#">Matchday 12</a>
+                  <a href="#">Matchday 11</a>
+                  <a href="#">Matchday 10</a>
+                </div>
+                <li><a href="./{{league_name}}/standings">Standings</a></li>
+              <li><a href="./{{league_name}}/topscorers">Top Scorers</a></li>
+              </li>
+            </ul>
+        </div>
+
+{% endblock %}

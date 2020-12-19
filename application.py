@@ -56,18 +56,19 @@ def get_matchday_by_date(match_date):
 @app.route('/league/<league_name>')
 def test_page(league_name):
     league_id = map_league_name_to_id(league_name)
+    # TODO: request update for fixtures in progress
     if league_id is not None:
         matchday_id = matchday.get_current_matchday_id(league_id)
         # matchday_fixtures = FixturesTable(matchday.get_current_matchday_fixtures(league_id))
         matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
-        table = StandingTable(standing_table.build_standings_table(league_id))
-        topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
+        # table = StandingTable(standing_table.build_standings_table(league_id))
+        # topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
 
         app.logger.info(f'Request to open league page {league_name}')
 
         return render_template('league_template.html', methods=['GET'],
                                matchday_id=matchday_id, fixtures=matchday_fixtures,
-                               table=table, topscorers=topscorers
+                               league_name=league_name
                                )
     else:
         app.logger.error("Page not found")
@@ -79,7 +80,16 @@ def league_standings(league_name):
     league_id = map_league_name_to_id(league_name)
     table = StandingTable(standing_table.build_standings_table(league_id))
 
-    return render_template('standings_template.html', methods=['GET'], table=table)
+
+    return render_template('standings.html', methods=['GET'], table=table, league_name=league_name)
+
+
+@app.route('/league/<league_name>/topscorers')
+def top_scorers(league_name):
+    league_id = map_league_name_to_id(league_name)
+    topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
+
+    return render_template('topscorers_template.html', methods=['GET'], topscorers=topscorers)
 
 # @app.route('/league/<int:league_id>/matchday/<int:matchday_id>')
 # def matchday_page(league_id, matchday_id):

@@ -1,33 +1,11 @@
-{% extends "layout.html" %}
+{% extends "league_layout.html" %}
 {% block title %} Today Matches {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
-
-
 {% block content %}
-    <div class="league-info">
-        <div id="league-name">Bundesliga</div>
-        <!-- <div id="country-flag"><img src="index.png"></div> -->
-    </div>
-        <div id="league-menu">
-            <ul>
 
-              <li class="dropdown">
-                <a href="javascript:void(0)" class="dropbtn">{{matchday_id}}</a>
-                <div class="dropdown-content">
-                  <a href="#">Matchday 12</a>
-                  <a href="#">Matchday 11</a>
-                  <a href="#">Matchday 10</a>
-                </div>
-                <li><a href="./standings">Standings</a></li>
-              <li><a href="./top_scorers">Top Scorers</a></li>
-              </li>
-            </ul>
-        </div>
-<!--    <div class = "header">-->
-<!--        MATCHDAY {{matchday_id}}-->
-<!--    </div>-->
+{{ super() }}
     <div class = "matchday">
     <table>
         <tbody>
@@ -52,10 +30,10 @@
 <!--    <div class = "standings_table">-->
 <!--        {{table}}-->
 <!--    </div>-->
-    <div class = "header">
-        TOP SCORERS
-    </div>
-    <div class = "topscorers">
-        {{topscorers}}
-    </div>
+<!--    <div class = "header">-->
+<!--        TOP SCORERS-->
+<!--    </div>-->
+<!--    <div class = "topscorers">-->
+<!--        {{topscorers}}-->
+<!--    </div>-->
 {% endblock %}

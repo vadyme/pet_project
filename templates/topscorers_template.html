@@ -1,0 +1,17 @@
+{% extends "league_layout.html" %}
+{% block title %} Today Matches {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+
+{{ super() }}
+
+    <div class = "header">
+        TOP SCORERS
+    </div>
+    <div class = "topscorers">
+        {{topscorers}}
+    </div>
+
+{% endblock %}
