@@ -65,7 +65,7 @@ def test_page(league_name):
 
         app.logger.info(f'Request to open league page {league_name}')
 
-        return render_template('matchday_template.html', methods=['GET'],
+        return render_template('league_template.html', methods=['GET'],
                                matchday_id=matchday_id, fixtures=matchday_fixtures,
                                table=table, topscorers=topscorers
                                )
@@ -73,6 +73,13 @@ def test_page(league_name):
         app.logger.error("Page not found")
         return render_template('page_not_found.html')
 
+
+@app.route('/league/<league_name>/standings')
+def league_standings(league_name):
+    league_id = map_league_name_to_id(league_name)
+    table = StandingTable(standing_table.build_standings_table(league_id))
+
+    return render_template('standings_template.html', methods=['GET'], table=table)
 
 # @app.route('/league/<int:league_id>/matchday/<int:matchday_id>')
 # def matchday_page(league_id, matchday_id):
@@ -82,7 +89,7 @@ def test_page(league_name):
 #     table = StandingTable(standing_table.build_standings_table(league_id))
 #     topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
 #
-#     return render_template('matchday_template.html', methods=['GET'],
+#     return render_template('league_template.html', methods=['GET'],
 #                            matchday_id=matchday_id, fixtures=matchday_fixtures, table=table, topscorers=topscorers)
 
 
