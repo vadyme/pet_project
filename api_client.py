@@ -47,6 +47,11 @@ def get_current_round_by_league_id(league_id):
     return do_request(url)
 
 
+def get_rounds_by_league(league_id):
+    # https://api-football-v1.p.rapidapi.com/v2/fixtures/rounds/{league_id}
+    url = f'{FIXTURES_URL_V2}/rounds/{league_id}'
+    return do_request(url)
+
 def get_standings_by_league_id(league_id):
     url = f'{BASE_URL_V2}/{"leagueTable"}/{league_id}'
     return do_request(url)

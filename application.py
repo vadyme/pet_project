@@ -8,7 +8,7 @@ import standing_table
 import matchday
 from standing_table import StandingTable
 from Topscorers import TopscorersTable
-from league import map_league_name_to_id
+from league import map_league_name_to_id, get_list_of_matchdays
 from week_dates_range import get_week_dates
 from datetime import date
 
@@ -54,20 +54,21 @@ def get_matchday_by_date(match_date):
 
 
 @app.route('/league/<league_name>')
-def test_page(league_name):
+@app.route('/league/<league_name>/<pathtoamatchday>')
+def test_page(league_name, pathtoamatchday=None):
     league_id = map_league_name_to_id(league_name)
     # TODO: request update for fixtures in progress
     if league_id is not None:
-        matchday_id = matchday.get_current_matchday_id(league_id)
-        # matchday_fixtures = FixturesTable(matchday.get_current_matchday_fixtures(league_id))
+        matchday_id = pathtoamatchday.replace("_", " ") if pathtoamatchday else matchday.get_current_matchday_id(league_id)
+        matchdays = get_list_of_matchdays(league_id)
         matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
-        # table = StandingTable(standing_table.build_standings_table(league_id))
-        # topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
 
         app.logger.info(f'Request to open league page {league_name}')
 
         return render_template('league_template.html', methods=['GET'],
-                               matchday_id=matchday_id, fixtures=matchday_fixtures,
+                               matchdays=matchdays,
+                               matchday_id=matchday_id,
+                               fixtures=matchday_fixtures,
                                league_name=league_name
                                )
     else:
@@ -80,7 +81,6 @@ def league_standings(league_name):
     league_id = map_league_name_to_id(league_name)
     table = StandingTable(standing_table.build_standings_table(league_id))
 
-
     return render_template('standings.html', methods=['GET'], table=table, league_name=league_name)
 
 
@@ -91,16 +91,19 @@ def top_scorers(league_name):
 
     return render_template('topscorers_template.html', methods=['GET'], topscorers=topscorers)
 
-# @app.route('/league/<int:league_id>/matchday/<int:matchday_id>')
-# def matchday_page(league_id, matchday_id):
-#     # matchday_id = matchday.get_current_matchday_id(league_id)
-#     # TODO: FixturesTable is now deprecated, don't use it
-#     matchday_fixtures = FixturesTable(matchday.get_fixtures_by_league_and_round(league_id, matchday_id))
-#     table = StandingTable(standing_table.build_standings_table(league_id))
-#     topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
+
+# @app.route('/league/<league_name>/matchday/<matchday_name>')
+# def matchday_page(league_name, matchday_name):
+#     league_id = map_league_name_to_id(league_name)
+#     matchdays = get_list_of_matchdays(league_id)
+#     matchday_id = matchday_name.replace("_", " ")
+#     matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
 #
 #     return render_template('league_template.html', methods=['GET'],
-#                            matchday_id=matchday_id, fixtures=matchday_fixtures, table=table, topscorers=topscorers)
+#                            matchday_id=matchday_id,
+#                            fixtures=matchday_fixtures,
+#                            league_name=league_name,
+#                            matchdays=matchdays)
 
 
 @app.route('/fixture/<int:fixture_id>')

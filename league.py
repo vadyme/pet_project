@@ -1,3 +1,5 @@
+import api_client
+
 available_leagues = {'segunda_division': 2847,
                      'championship': 2794,
                      'bundesliga_1': 2755,
@@ -17,3 +19,7 @@ def map_league_name_to_id(league_name):
 
 def urlify_league_name(league_name):
     return league_name.lower().replace(' ', '_')
+
+
+def get_list_of_matchdays(league_id):
+    return api_client.get_rounds_by_league(league_id)['api']['fixtures']
