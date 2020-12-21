@@ -36,7 +36,7 @@ def get_fixtures_by_league_and_round(league_id, matchday_id):
     fixtures = dao.get_fixtures_by_league_and_round(league_id, matchday_id)
     fs = build_list_of_fixture_objects(fixtures)
 
-    return fs
+    return sorted(fs, key=lambda x: (x.kickoff_date.date, x.kickoff_date.time))
 
 
 def get_fixtures_by_date(date):
