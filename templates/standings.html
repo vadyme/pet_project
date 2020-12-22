@@ -7,11 +7,54 @@
 
 {{ super() }}
 
+<!--        rank,
+        team_id,
+        team_name,
+        team_logo,
+        group,
+        forme,
+        status,
+        description,
+        all_played,
+        all_win,
+        all_draw,
+        all_lose,
+        all_goals_for,
+        all_goals_against,
+        goals_diff,
+        pts-->
+
     <div class = "header">
         STANDINGS
     </div>
+    <div class = "matchday">
+    <table>
+        <tbody>
     <div class = "standings_table">
-        {{table}}
+        {% for row in table %}
+            <tr>
+                <td>{{row.rank}}</td>
+                <td><img class="img-center" src = "{{row.team_logo}}"></a></td>
+                <td>{{row.team_name}}</td>
+                <td>{{row.pts}}</td>
+                <td>{{row.played}}</td>
+                <td>{{row.win}}</td>
+                <td>{{row.draw}}</td>
+                <td>{{row.lose}}</td>
+                <td>{{row.gf}}</td>
+
+                    <td class="tooltip">{{row.form[0].score}} <span class="tooltiptext">{{row.form[0].home_team_name}}<br>{{row.form[0].score}}<br>
+                    {{row.form[0].away_team_name}}</span> </td>
+                    <td>{{row.form[1].score}}</td>
+                    <td>{{row.form[2].score}}</td>
+                    <td>{{row.form[3].score}}</td>
+                    <td>{{row.form[4].score}}</td>
+
+            </tr>
+        {% endfor %}
+    </div>
+        </tbody>
+    </table>
     </div>
 
 {% endblock %}

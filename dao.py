@@ -43,3 +43,16 @@ def update_fixture_object(fixture_id, status_short, status, elapsed, goals_home_
                                                                               }})
 
     return data
+
+
+# def get_form_by_team(team_id, league_id):
+#     q = {"$and": [{"$or": [{"homeTeam.team_id": team_id}, {"awayTeam.team_id": team_id}]}, {"league_id": league_id}, {"status" :"Match Finished"}]}
+#     data = list(db.fixtures_db_collection.find(q).sort('event_timestamp', -1).limit(5))
+#
+#     return data
+
+def get_form_by_team(team_id):
+    q = {"$and": [{"$or": [{"homeTeam.team_id": team_id}, {"awayTeam.team_id": team_id}]}, {"status" :"Match Finished"}]}
+    data = list(db.fixtures_db_collection.find(q).sort('event_timestamp', -1).limit(5))
+
+    return data

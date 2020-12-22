@@ -6,7 +6,7 @@ import Topscorers
 import fixture
 import standing_table
 import matchday
-from standing_table import StandingTable
+from standing_table import StandingTable, Standing
 from Topscorers import TopscorersTable
 from league import map_league_name_to_id, get_list_of_matchdays
 from week_dates_range import get_week_dates
@@ -81,7 +81,8 @@ def test_page(league_name, pathtomatchday=None):
 @app.route('/league/<league_name>/standings')
 def league_standings(league_name):
     league_id = map_league_name_to_id(league_name)
-    table = StandingTable(standing_table.build_standings_table(league_id))
+    # table = StandingTable(standing_table.build_standings_table(league_id))
+    table = standing_table.build_standings_table(league_id)
     current_matchday = matchday.get_current_matchday_id(league_id)
     matchdays = get_list_of_matchdays(league_id)
 
@@ -90,6 +91,7 @@ def league_standings(league_name):
                            league_name=league_name,
                            current_matchday=current_matchday,
                            matchdays=matchdays)
+
 
 
 @app.route('/league/<league_name>/topscorers')

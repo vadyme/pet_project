@@ -4,9 +4,111 @@ import api_client
 import json
 from flask_table import Table, Col
 from flask import Markup
+from dao import get_form_by_team
+from matchday import build_list_of_fixture_objects
 
 json_file = './models/standing_table.json'
 
+
+class Standing(object):
+    def __init__(self, rank, team_id, team_name, logo, group, form, status, description, all_played,
+                 all_win, all_draw, all_lose, all_goals_for, all_goals_against, goals_diff, pts):
+        self.rank = rank
+        self.team_id=team_id
+        self.team_name = team_name
+        self.team_logo = logo
+        self.group = group
+        self.form = form
+        self.status = status
+        self.description = description
+        self.played = all_played
+        self.win = all_win
+        self.draw = all_draw
+        self.lose = all_lose
+        self.gf = all_goals_for
+        self.ga = all_goals_against
+        self.gd = goals_diff
+        self.pts = pts
+
+
+def create_standings_object(standing):
+    rank = standing['rank']
+    team_id = standing['team_id']
+    team_name = standing['teamName']
+    team_logo = standing['logo']
+    group = standing['group']
+    # forme = standing['forme']
+    form = get_form(team_id)
+    status = standing['status']
+    description = standing['description']
+    all_played = standing['all']['matchsPlayed']
+    all_win = standing['all']['win']
+    all_draw = standing['all']['draw']
+    all_lose = standing['all']['lose']
+    all_goals_for = standing['all']['goalsFor']
+    all_goals_against = standing['all']['goalsAgainst']
+    goals_diff = standing['goalsDiff']
+    pts = standing['points']
+
+    return Standing(
+        rank,
+        team_id,
+        team_name,
+        team_logo,
+        group,
+        form,
+        status,
+        description,
+        all_played,
+        all_win,
+        all_draw,
+        all_lose,
+        all_goals_for,
+        all_goals_against,
+        goals_diff,
+        pts
+    )
+
+
+    """
+    {
+  "rank": 1,
+  "team_id": 157,
+  "teamName": "Bayern Munich",
+  "logo": "https://media.api-sports.io/football/teams/157.png",
+  "group": "Bundesliga",
+  "forme": "WWDDW",
+  "status": "same",
+  "description": "Promotion - Champions League (Group Stage)",
+  "all": {
+    "matchsPlayed": 13,
+    "win": 9,
+    "draw": 3,
+    "lose": 1,
+    "goalsFor": 39,
+    "goalsAgainst": 19
+  },
+  "home": {
+    "matchsPlayed": 6,
+    "win": 4,
+    "draw": 2,
+    "lose": 0,
+    "goalsFor": 23,
+    "goalsAgainst": 8
+  },
+  "away": {
+    "matchsPlayed": 7,
+    "win": 5,
+    "draw": 1,
+    "lose": 1,
+    "goalsFor": 16,
+    "goalsAgainst": 11
+  },
+  "goalsDiff": 20,
+  "points": 30,
+  "lastUpdate": "2020-12-20"
+}
+    """
 
 class StandingTable(Table):
     def sort_url(self, col_id, reverse=False):
@@ -62,25 +164,43 @@ class StandingTableRow(object):
         self.form = form
 
 
-def build_standings_table(i):
-    table_data = get_standings_by_league_id(i)
+def build_list_of_position_objects(league_id):
+    position_objects = []
+
+
+def get_league_standings(league_id):
+    table = get_standings_by_league_id(league_id)
+    return table
+
+
+def build_standings_table(league_id):
+    table_data = get_league_standings(league_id)
 
     standing_table_rows = []
     for row in table_data:
-        logo = row['logo']
-        rank = row['rank']
-        team_name = row['teamName']
-        all_games_stats = row['all']
-        games_played = all_games_stats['matchsPlayed']
-        wins = all_games_stats['win']
-        draws = all_games_stats['draw']
-        losses = all_games_stats['lose']
-        goals_for = all_games_stats['goalsFor']
-        goals_against = all_games_stats['goalsAgainst']
-        points = row['points']
-        form = row['forme']
-
-        standing_table_rows.append(
-            StandingTableRow(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name,
-                             games_played, wins, draws, losses, goals_for, goals_against, points, form))
+        standing_table_rows.append(create_standings_object(row))
+        # logo = row['logo']
+        # rank = row['rank']
+        # team_name = row['teamName']
+        # all_games_stats = row['all']
+        # games_played = all_games_stats['matchsPlayed']
+        # wins = all_games_stats['win']
+        # draws = all_games_stats['draw']
+        # losses = all_games_stats['lose']
+        # goals_for = all_games_stats['goalsFor']
+        # goals_against = all_games_stats['goalsAgainst']
+        # points = row['points']
+        # form = row['forme']
+        #
+        # standing_table_rows.append(
+        #     StandingTableRow(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name,
+        #                      games_played, wins, draws, losses, goals_for, goals_against, points, form))
     return standing_table_rows
+
+
+def get_form(team_id):
+
+    fixtures = get_form_by_team(team_id)
+    fs = build_list_of_fixture_objects(fixtures)
+
+    return fs
