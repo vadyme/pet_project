@@ -17,11 +17,11 @@
             <ul>
 
               <li class="dropdown">
-                <a href="/league/{{ league_name }}" class="dropbtn">Results & Fixtures</a>
+                <a href="/league/{{ league_name }}" class="dropbtn">Results</a>
                 <div class="dropdown-content">
                     {% for matchday in matchdays %}
-                        {% if (matchday.split("Regular_Season_-_"))[1]|int < (matchday_id.split("Regular Season - "))[1]|int %}
-                        <a href="/league/{{ league_name }}/matchday/{{matchday}}"> Matchday {{matchday.split("Regular_Season_-_")[1]}}</a>
+                        {% if (matchday.split("Regular_Season_-_"))[1]|int < (current_matchday.split("Regular Season - "))[1]|int %}
+                            <a href="/league/{{ league_name }}/{{matchday}}"> Matchday {{matchday.split("Regular_Season_-_")[1]}}</a>
                         {% endif %}
                     {% endfor %}
                 </div>

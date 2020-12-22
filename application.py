@@ -54,12 +54,13 @@ def get_matchday_by_date(match_date):
 
 
 @app.route('/league/<league_name>')
-@app.route('/league/<league_name>/<pathtoamatchday>')
-def test_page(league_name, pathtoamatchday=None):
+@app.route('/league/<league_name>/<pathtomatchday>')
+def test_page(league_name, pathtomatchday=None):
     league_id = map_league_name_to_id(league_name)
     # TODO: request update for fixtures in progress
     if league_id is not None:
-        matchday_id = pathtoamatchday.replace("_", " ") if pathtoamatchday else matchday.get_current_matchday_id(league_id)
+        current_matchday = matchday.get_current_matchday_id(league_id)
+        matchday_id = pathtomatchday.replace("_", " ") if pathtomatchday else current_matchday
         matchdays = get_list_of_matchdays(league_id)
         matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
 
@@ -67,6 +68,7 @@ def test_page(league_name, pathtoamatchday=None):
 
         return render_template('league_template.html', methods=['GET'],
                                matchdays=matchdays,
+                               current_matchday=current_matchday,
                                matchday_id=matchday_id,
                                fixtures=matchday_fixtures,
                                league_name=league_name
