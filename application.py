@@ -82,16 +82,28 @@ def test_page(league_name, pathtomatchday=None):
 def league_standings(league_name):
     league_id = map_league_name_to_id(league_name)
     table = StandingTable(standing_table.build_standings_table(league_id))
+    current_matchday = matchday.get_current_matchday_id(league_id)
+    matchdays = get_list_of_matchdays(league_id)
 
-    return render_template('standings.html', methods=['GET'], table=table, league_name=league_name)
+    return render_template('standings.html', methods=['GET'],
+                           table=table,
+                           league_name=league_name,
+                           current_matchday=current_matchday,
+                           matchdays=matchdays)
 
 
 @app.route('/league/<league_name>/topscorers')
 def top_scorers(league_name):
     league_id = map_league_name_to_id(league_name)
     topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
+    current_matchday = matchday.get_current_matchday_id(league_id)
+    matchdays = get_list_of_matchdays(league_id)
 
-    return render_template('topscorers_template.html', methods=['GET'], topscorers=topscorers)
+    return render_template('topscorers_template.html', methods=['GET'],
+                           topscorers=topscorers,
+                           league_name=league_name,
+                           current_matchday=current_matchday,
+                           matchdays=matchdays)
 
 
 # @app.route('/league/<league_name>/matchday/<matchday_name>')
