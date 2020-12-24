@@ -42,13 +42,60 @@
                 <td>{{row.draw}}</td>
                 <td>{{row.lose}}</td>
                 <td>{{row.gf}}</td>
-
-                    <td class="tooltip">{{row.form[0].score}} <span class="tooltiptext">{{row.form[0].home_team_name}}<br>{{row.form[0].score}}<br>
-                    {{row.form[0].away_team_name}}</span> </td>
-                    <td>{{row.form[1].score}}</td>
-                    <td>{{row.form[2].score}}</td>
-                    <td>{{row.form[3].score}}</td>
-                    <td>{{row.form[4].score}}</td>
+                <td>{{row.ga}}</td>
+                <td>{{row.gd}}</td>
+                {% for fixture in row.form %}
+                    {% if fixture.goals_home_team == fixture.goals_away_team %}
+                        <td class="tooltip">
+                            <div class='box grey'></div>
+                                <span class="tooltiptext">
+                                    <a href="/fixture/{{fixture.id}}">
+                                        {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                    </a>
+                                </span>
+                        </td>
+                    {% elif fixture.home_team_name == row.team_name %}
+                        {% if fixture.goals_home_team > fixture.goals_away_team %}
+                            <td class="tooltip">
+                                <div class='box green'></div>
+                                    <span class="tooltiptext">
+                                        <a href="/fixture/{{fixture.id}}">
+                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                        </a>
+                                    </span>
+                            </td>
+                        {% elif fixture.goals_home_team < fixture.goals_away_team %}
+                            <td class="tooltip">
+                                <div class='box red'></div>
+                                    <span class="tooltiptext">
+                                        <a href="/fixture/{{fixture.id}}">
+                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                        </a>
+                                    </span>
+                            </td>
+                        {% endif %}
+                    {% elif fixture.away_team_name == row.team_name %}
+                        {% if fixture.goals_home_team > fixture.goals_away_team %}
+                            <td class="tooltip">
+                                <div class='box red'></div>
+                                    <span class="tooltiptext">
+                                        <a href="/fixture/{{fixture.id}}">
+                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                        </a>
+                                    </span>
+                            </td>
+                        {% elif fixture.goals_home_team < fixture.goals_away_team %}
+                            <td class="tooltip">
+                                <div class='box green'></div>
+                                    <span class="tooltiptext">
+                                        <a href="/fixture/{{fixture.id}}">
+                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                        </a>
+                                    </span>
+                            </td>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
 
             </tr>
         {% endfor %}

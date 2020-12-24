@@ -222,8 +222,6 @@ li.dropdown {
 
 .tooltip {
   position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext {
@@ -233,7 +231,7 @@ li.dropdown {
   color: #fff;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 3px 0;
 
   /* Position the tooltip */
   position: absolute;
@@ -242,4 +240,26 @@ li.dropdown {
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+  overflow: visible;
+}
+
+.box {
+  float: left;
+  height: 13px;
+  width: 13px;
+  margin-bottom: 2px;
+  border-radius:50%;
+  clear: both;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.grey {
+  background-color: grey;
 }
