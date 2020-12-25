@@ -6,7 +6,8 @@ available_leagues = {'segunda_division': 2847,
                      'primera_division': 2833,
                      'serie_a': 2857,
                      'premier_league': 2790,
-                     'jupiler_pro_league': 2660
+                     'jupiler_pro_league': 2660,
+                     'super_lig': 2816
                      }
 
 
