@@ -61,7 +61,7 @@ def test_page(league_name, pathtomatchday=None):
     if league_id is not None:
         current_matchday = matchday.get_current_matchday_id(league_id)
         matchday_id = pathtomatchday.replace("_", " ") if pathtomatchday else current_matchday
-        matchdays = get_list_of_matchdays(league_id)
+        matchdays = reversed(get_list_of_matchdays(league_id))
         matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
 
         app.logger.info(f'Request to open league page {league_name}')
@@ -84,7 +84,7 @@ def league_standings(league_name):
     # table = StandingTable(standing_table.build_standings_table(league_id))
     table = standing_table.build_standings_table(league_id)
     current_matchday = matchday.get_current_matchday_id(league_id)
-    matchdays = get_list_of_matchdays(league_id)
+    matchdays = reversed(get_list_of_matchdays(league_id))
 
     return render_template('standings.html', methods=['GET'],
                            table=table,
@@ -99,7 +99,7 @@ def top_scorers(league_name):
     league_id = map_league_name_to_id(league_name)
     topscorers = TopscorersTable(Topscorers.populate_table_data(league_id))
     current_matchday = matchday.get_current_matchday_id(league_id)
-    matchdays = get_list_of_matchdays(league_id)
+    matchdays = reversed(get_list_of_matchdays(league_id))
 
     return render_template('topscorers_template.html', methods=['GET'],
                            topscorers=topscorers,
