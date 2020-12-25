@@ -5,43 +5,47 @@
 {% endblock %}
 
 {% block content %}
-<div class = "calendar">
-    <table>
-        <tr>
-            {% for day in calendar %}
-                {% for key, value in day.items() %}
-                    <td>
-                        <a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}}/{{value.split('-')[2]}} </a>
-                    </td>
-                {% endfor %}
-            {% endfor %}
-        </tr>
-    </table>
-</div>
-<div class = "matchday">
+<!--<div class = "calendar">-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            {% for day in calendar %}-->
+<!--                {% for key, value in day.items() %}-->
+<!--                    <td>-->
+<!--                        <a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}}/{{value.split('-')[2]}} </a>-->
+<!--                    </td>-->
+<!--                {% endfor %}-->
+<!--            {% endfor %}-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->
+<div class="column middle">
     <table>
         <tbody>
-        {% for fixture in matchday_fixtures %}
-            <tr>
-                <td class="text-center">{{fixture.kickoff_date.time}}</td>
-                <td class="home-team">{{fixture.home_team_name}}</td>
-                <td class="img-center"><img class="img-center" src={{fixture.home_team_logo}}></td>
-                {% if fixture.goals_home_team != None %}
-                <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.goals_home_team}}:{{fixture.goals_away_team}}</a></td>
-                {% else %}
-                <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.kickoff_date.time}}</a></td>
-                {% endif %}
-                <td class="img-center"><img class="img-center" src={{fixture.away_team_logo}}></td>
-                <td class="away-team">{{fixture.away_team_name}}</td>
-                {% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
-                    <td class="text-center">{{fixture.elapsed}}'</td>
-                {% else %}
-                    <td class="text-center">{{fixture.status_short}}</td>
-                {% endif %}
-                <td class="img-center"><img src={{fixture.country_flag}} style="width:20px;height:20px;"></td>
-                <td class="text-left"><a href="/league/{{fixture.urlified_league_name}}">{{fixture.league_name}}</a></td>
-            </tr>
-        {% endfor %}
+        {% if matchday_fixtures|length > 0 %}
+            {% for fixture in matchday_fixtures %}
+                <tr>
+                    <td class="text-center">{{fixture.kickoff_date.time}}</td>
+                    <td class="home-team">{{fixture.home_team_name}}</td>
+                    <td class="img-center"><img class="img-center" src={{fixture.home_team_logo}}></td>
+                    {% if fixture.goals_home_team != None %}
+                    <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.goals_home_team}}:{{fixture.goals_away_team}}</a></td>
+                    {% else %}
+                    <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.kickoff_date.time}}</a></td>
+                    {% endif %}
+                    <td class="img-center"><img class="img-center" src={{fixture.away_team_logo}}></td>
+                    <td class="away-team">{{fixture.away_team_name}}</td>
+                    {% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
+                        <td class="text-center">{{fixture.elapsed}}'</td>
+                    {% else %}
+                        <td class="text-center">{{fixture.status_short}}</td>
+                    {% endif %}
+                    <td class="img-center"><img src={{fixture.country_flag}} style="width:20px;height:20px;"></td>
+                    <td class="text-left"><a href="/league/{{fixture.urlified_league_name}}">{{fixture.league_name}}</a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <div id="empty-table">No matches today</div>
+        {% endif %}
         </tbody>
     </table>
 </div>

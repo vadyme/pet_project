@@ -4,32 +4,75 @@
     {% block head %}
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/static/styles.css" type="text/css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
         <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
     {% block header %}
         <header>
-        <a href="/">GOLAZO!</a>
-    </header>
+            <div style="background-image: url('/static/images/stadio.png'); height:400px;">
+                <span>
+                    <a href="/" style="margin-top: 200px;">GOLAZO!</a>
+                </span>
+            </div>
+        </header>
     {% endblock %}
-<!--    <div>{% block menu %}-->
-<!--        <div class = "middle-well">-->
-<!--            <a href="/league/bundesliga_1"> Bundesliga </a>-->
-<!--            <a href="/league/serie_a"> Serie A </a>-->
-<!--            <a href="/league/primera_division"> Primera </a>-->
-<!--            <a href="/league/esp_segunda"> Segunda </a>-->
-<!--            <a href="/league/eng_championship"> Championship </a>-->
-<!--        </div>-->
-<!--        {% endblock %}-->
+
+
+  </div>
+        <div id = "content">
+                                <div class="column left">
+        <div class="league-menu">
+        <ul>
+                        <li>
+                <a href = "/">Home</a>
+            </li>
+            <li>
+                <a href = "/league/premier_league">Premiere League</a>
+            </li>
+                        <li>
+                <a href = "/league/bundesliga_1">1. Bundesliga</a>
+            </li>
+                            <a href = "/league/primera_division">La Liga</a>
+            </li>
+                                    <li>
+                UEFA Champions League
+            </li>
+                                    <li>
+                UEFA Europa League
+            </li>
+            <li>
+                <a href = "/league/championship">Championship</a>
+            </li>
+            <li>
+
+            <li>
+                <a href = "/league/segunda_division">La Liga 2</a>
+            </li>
+            <li>
+                <a href = "/league/serie_a">Serie A</a>
+            </li>
+            <li>
+                <a href = "/league/league_jupiler">Belgian First Division A</a>
+            </li>
+
+
+
+        </ul>
+    </div>
+                                </div>
+
+<!--        <div class="column middle">-->
+        {% block content %}
+
+        {% endblock %}
+        </div>
+    </div>
+<!--    <div id="footer">-->
+<!--      {% block footer %}-->
+<!--        vadyme | 2020-->
+<!--      {% endblock %}-->
 <!--    </div>-->
-    <div id = "content">
-        {% block content %}{% endblock %}
-    </div>
-    <div id="footer">
-      {% block footer %}
-        vadyme | 2020
-      {% endblock %}
-    </div>
   </body>
 </html>

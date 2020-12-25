@@ -1,6 +1,10 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
+* {
+margin:0;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
@@ -32,7 +36,7 @@ a:hover, a:active {
 table {
   text-align: left;
   overflow: hidden;
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
   display: table;
   padding: 0 0 8em 0;
@@ -40,7 +44,7 @@ table {
   border-collapse: collapse;
 }
 
-table tr:nth-child(even) {
+table tr:nth-child(odd) {
     background-color: #323C50;
 }
 
@@ -138,20 +142,15 @@ table td {
 }
 
 header {
-    margin-top: 25px;
     margin-bottom: 35px;
    text-align: center;
    font-size: 75px;
 }
 
 .league-info, .league-menu{
-  margin: auto;
-  width: 50%;
-  border-bottom: 1px solid green;
-  padding: 5px;
+  margin-left: 60px;
   display: flex;
-  font-size: 22px;
-  font-weight: bolder;
+  font-size: small;
 }
 
 .league-name {
@@ -169,7 +168,7 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  width: 50%;
+ /* width: 50%; */
   margin: auto;
   font-weight: bolder;
   /*background-color: #333;*/
@@ -262,4 +261,35 @@ li.dropdown {
 
 .grey {
   background-color: grey;
+}
+
+.column {
+    float:left;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.left {
+width: 25%;
+}
+
+.middle {
+    width: 50%;
+}
+
+.league-menu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 1px;
+  text-decoration: none;
+}
+
+.league-menu li {
+    float: none;
+}
+
+#empty-table  {
+    font-size: 50px;
+    text-align: center;
 }
