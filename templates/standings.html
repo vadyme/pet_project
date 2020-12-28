@@ -24,19 +24,37 @@
         goals_diff,
         pts-->
 
-    <div class = "header">
-        STANDINGS
-    </div>
+<!--    <div class = "header">-->
+<!--        STANDINGS-->
+<!--    </div>-->
     <div class = "column middle">
     <table>
         <tbody>
     <div class = "standings_table">
+        <tr class="grey-text-table-headers">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Pts</td>
+            <td>MP</td>
+            <td>W</td>
+            <td>D</td>
+            <td>L</td>
+            <td>GF</td>
+            <td>GA</td>
+            <td>GD</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
         {% for row in table %}
             <tr>
                 <td>{{row.rank}}</td>
                 <td><img class="img-center" src = "{{row.team_logo}}"></a></td>
                 <td>{{row.team_name}}</td>
-                <td>{{row.pts}}</td>
+                <td><b>{{row.pts}}</b></td>
                 <td>{{row.played}}</td>
                 <td>{{row.win}}</td>
                 <td>{{row.draw}}</td>

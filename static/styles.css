@@ -310,3 +310,7 @@ width: 25%;
     padding-top: 15px;
     font-weight: bold
 }
+
+.grey-text-table-headers {
+    color: grey;
+}
