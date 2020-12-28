@@ -9,7 +9,7 @@ import matchday
 from standing_table import StandingTable, Standing
 from Topscorers import TopscorersTable
 from league import map_league_name_to_id, get_list_of_matchdays
-from week_dates_range import get_week_dates
+from week_dates_range import get_week_dates, get_day_name
 from datetime import date
 
 
@@ -37,20 +37,29 @@ def index():
     today = str(date.today())
     calendar = get_week_dates()
     matchday_fixtures = matchday.get_fixtures_by_date(today)
+    day_name = f'{get_day_name(today)}, {today.split("-")[1]}/{today.split("-")[2]}'
 
     app.logger.info("Request to open index page")
 
-    return render_template('index.html', matchday_fixtures=matchday_fixtures, calendar=calendar)
+    return render_template('index.html',
+                           matchday_fixtures=matchday_fixtures,
+                           calendar=calendar,
+                           day_name=day_name
+                           )
 
 
 @app.route('/matchday/<match_date>')
 def get_matchday_by_date(match_date):
     calendar = get_week_dates()
     matchday_fixtures = matchday.get_fixtures_by_date(match_date)
+    day_name = f'{get_day_name(match_date)}, {match_date.split("-")[1]}/{match_date.split("-")[2]}'
 
     app.logger.info(f'Request to open matchday page {match_date}')
 
-    return render_template('index.html', matchday_fixtures=matchday_fixtures, calendar=calendar)
+    return render_template('index.html',
+                           matchday_fixtures=matchday_fixtures,
+                           calendar=calendar,
+                           day_name=day_name)
 
 
 @app.route('/league/<league_name>')
