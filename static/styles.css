@@ -304,3 +304,9 @@ width: 25%;
 .league-menu > img {
     height: 12px;
 }
+
+#date {
+    font-size: 18px;
+    padding-top: 15px;
+    font-weight: bold
+}
