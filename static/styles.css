@@ -295,3 +295,12 @@ width: 25%;
     font-size: 50px;
     text-align: center;
 }
+
+.league-menu > ul > li > img {
+    height: 9px;
+    padding-right: 5px;
+}
+
+.league-menu > img {
+    height: 12px;
+}
