@@ -1,12 +1,10 @@
-from flask import Flask, render_template, json
-from werkzeug.exceptions import HTTPException
+from flask import Flask, render_template
 from logging.config import dictConfig
 
 import Topscorers
 import fixture
 import standing_table
 import matchday
-from standing_table import StandingTable, Standing
 from Topscorers import TopscorersTable
 from league import map_league_name_to_id, get_list_of_matchdays
 from week_dates_range import get_week_dates, get_day_name
@@ -75,7 +73,7 @@ def test_page(league_name, pathtomatchday=None):
 
         app.logger.info(f'Request to open league page {league_name}')
 
-        return render_template('league_template.html', methods=['GET'],
+        return render_template('league_matchday.html', methods=['GET'],
                                matchdays=matchdays,
                                current_matchday=current_matchday,
                                matchday_id=matchday_id,
@@ -102,7 +100,6 @@ def league_standings(league_name):
                            matchdays=matchdays)
 
 
-
 @app.route('/league/<league_name>/topscorers')
 def top_scorers(league_name):
     league_id = map_league_name_to_id(league_name)
@@ -110,25 +107,11 @@ def top_scorers(league_name):
     current_matchday = matchday.get_current_matchday_id(league_id)
     matchdays = reversed(get_list_of_matchdays(league_id))
 
-    return render_template('topscorers_template.html', methods=['GET'],
+    return render_template('topscorers.html', methods=['GET'],
                            topscorers=topscorers,
                            league_name=league_name,
                            current_matchday=current_matchday,
                            matchdays=matchdays)
-
-
-# @app.route('/league/<league_name>/matchday/<matchday_name>')
-# def matchday_page(league_name, matchday_name):
-#     league_id = map_league_name_to_id(league_name)
-#     matchdays = get_list_of_matchdays(league_id)
-#     matchday_id = matchday_name.replace("_", " ")
-#     matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
-#
-#     return render_template('league_template.html', methods=['GET'],
-#                            matchday_id=matchday_id,
-#                            fixtures=matchday_fixtures,
-#                            league_name=league_name,
-#                            matchdays=matchdays)
 
 
 @app.route('/fixture/<int:fixture_id>')
