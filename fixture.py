@@ -96,9 +96,13 @@ def create_fixture_object(fixture_id):
 
 def datetime_to_readable(iso_datetime):
     # "event_date": "2020-09-12T14:00:00+00:00"
-    datetime_hr = datetime.strftime(parser.isoparse(iso_datetime), '%d %b %H:%M')
-    date_hr = f'{datetime_hr.split(" ")[0]} {datetime_hr.split(" ")[1]}'
-    time_hr = f'{datetime_hr.split(" ")[2]}'
+    # datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+
+    iso_dateobject = dateutil.parser.parse(iso_datetime)
+    local_dateobject = iso_dateobject.astimezone()
+    datetime_hr_local = datetime.strftime(local_dateobject, '%d %b %H:%M')
+    date_hr = f'{datetime_hr_local.split(" ")[0]} {datetime_hr_local.split(" ")[1]}'
+    time_hr = f'{datetime_hr_local.split(" ")[2]}'
     return KickOffTime(date_hr, time_hr)
 
 
