@@ -35,6 +35,7 @@ def get_fixtures_by_league_and_round(league_id, matchday_id):
     # fixture_data = get_fixture_data(league_id)
     fixtures = dao.get_fixtures_by_league_and_round(league_id, matchday_id)
     fs = build_list_of_fixture_objects(fixtures)
+    update_if_live(fs)
 
     return sorted(fs, key=lambda x: (x.kickoff_date.date, x.kickoff_date.time))
 
@@ -45,6 +46,14 @@ def get_fixtures_by_date(date):
 
     # if kickoff time is earlier than now and the game is NS, fetch the data from API and update the DB
     # TODO: if there are multiple fixtures as above, think on sending asynchronous calls
+    update_if_live(fs)
+
+    sorted_fixtures = sorted(fs, key=lambda x: x.kickoff_date.time)
+
+    return sorted_fixtures
+
+
+def update_if_live(fs):
     now = time.time()
     for f in fs:
         if f.timestamp < now and (f.status != 'Match Finished'):
@@ -64,10 +73,6 @@ def get_fixtures_by_date(date):
             # TODO: rework the fixture class, add all necessary fields; make sure to update all fields in DB
             dao.update_fixture_object(f.id, f.status_short, f.status, f.elapsed, f.goals_home_team, f.goals_away_team,
                                       f.score_ht, f.score_ft, f.score_et, f.score_pen)
-
-    sorted_fixtures = sorted(fs, key=lambda x: x.kickoff_date.time)
-
-    return sorted_fixtures
 
 
 def build_list_of_fixture_objects(fixtures):
