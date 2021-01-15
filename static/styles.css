@@ -236,11 +236,24 @@ li.dropdown {
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
+  bottom: 100%;
+  margin-left: -60px;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
   overflow: visible;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
 }
 
 .box {
