@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block title %} Golazo - Football Results {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+<!--		<div class="row">-->
+<!--			<div class="col-md-12">-->
+<!--				<div class="page-header">-->
+<!--					<h1>-->
+<!--						Golazo! <small>Footbal scores</small>-->
+<!--					</h1>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+			<div class="row h-100 justify-content-center align-items-center">
+				<div class="col-md-1"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-1"></div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+	<div class="row top10"></div>
+	<div class="row">
+		<div class="col-md-2">
+			<div class="btn-group-vertical">
+				<button class="btn btn-outline-primary" type="button">
+					<a href = "/">Home</a>
+				</button>
+				<button class="btn btn-outline-primary" type="button">
+					<a href = "/league/premier_league"><img class="img-menu" src="/static/images/england.png"></a>
+<!--					<div class="dropdown">-->
+<!--      					<a href="#" id="imageDropdown" data-toggle="dropdown">-->
+<!--        					<img class="img-menu" src="/static/images/england.png">-->
+<!--      					</a>-->
+<!--      					<ul class="dropdown-menu" role="menu" aria-labelledby="imageDropdown">-->
+<!--        					<li role="presentation"><a role="menuitem" tabindex="-1" href="/league/premier_league">Premier League</a></li>-->
+<!--        					<li role="presentation"><a role="menuitem" tabindex="-2" href="/league/championship">Championship</a></li>-->
+<!--      					</ul>-->
+<!--    				</div>-->
+				</button>
+				<button class="btn btn-outline-primary" type="button">
+					<a href = "/league/bundesliga_1"><img class="img-menu" src="/static/images/de.png"></a>
+				</button>
+				<button class="btn btn-outline-primary" type="button">
+					<a href = "/league/primera_division"><img class="img-menu" src="/static/images/es.png"></a>
+				</button>
+				<button class="btn btn-outline-primary" type="button">
+					<a href = "/league/serie_a"><img class="img-menu" src="/static/images/it.png"></a>
+				</button>
+				<button class="btn btn-outline-primary" type="button">
+					<a href = "/league/super_lig"><img class="img-menu" src="/static/images/tr.svg"></a>
+				</button>
+				<button class="btn btn-outline-primary" type="button">
+					<a href = "/league/jupiler_pro_league"><img class="img-menu" src="/static/images/be.svg"></a>
+				</button>
+<!--				<button class="btn btn-secondary" type="button">-->
+<!--					<img class="img-menu" src="/static/images/es.png"><a href = "/league/segunda_division">La Liga 2</a>-->
+<!--				</button>-->
+			</div>
+		</div>
+		<div class="col-md-8">
+			{% if matchday_fixtures|length > 0 %}
+				{% for fixture in matchday_fixtures %}
+					<div class="row text-small">
+						<div class="col-md-1"></div>
+						<div class="col-md-1"><span>{{fixture.kickoff_date.time}}</span></div>
+						<div class="col-md-2 text-right"><span>{{fixture.home_team_name}} <img style="width:25px" src={{fixture.home_team_logo}}></span></div>
+						<div class="col-md-1 text-center">
+							<button type="button" class="btn btn-outline-info btn-sm">
+								{% if fixture.goals_home_team != None %}
+									{{fixture.goals_home_team}}:{{fixture.goals_away_team}}
+								{% else %}
+									{{fixture.kickoff_date.time}}
+								{% endif %}
+							</button>
+						</div>
+						<div class="col-md-2">
+							<span><img style="width:25px" src={{fixture.away_team_logo}}> {{fixture.away_team_name}}</span>
+						</div>
+						<div class="col-md-1">
+							<span class="badge badge-secondary">
+								{% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
+									{{fixture.elapsed}}'
+								{% else %}
+									{{fixture.status_short}}
+								{% endif %}
+							</span>
+						</div>
+						<div class="col-md-2">
+							<span>
+								<img src={{fixture.country_flag}} style="width:20px;height:20px;"><a href="/league/{{fixture.urlified_league_name}}">  {{fixture.league_name}}</a>
+							</span>
+						</div>
+						<div class="col-md-1"></div>
+						<div class="col-md-1"></div>
+
+					</div>
+				{% endfor %}
+			{% endif %}
+		</div>
+		<div class="col-md-2">
+			<div class="btn-group-vertical">
+				{% for day in calendar %}
+					{% for key, value in day.items() %}
+                    	<button class="btn btn-secondary btn-sm" type="button">
+                        	<a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}}/{{value.split('-')[2]}} </a>
+						</button>
+                	{% endfor %}
+            	{% endfor %}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12"></div>
+	</div>
+	</div>
+{% endblock %}

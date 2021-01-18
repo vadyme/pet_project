@@ -20,18 +20,18 @@ body {
   font-weight: bold;
 }
 
-a:link, a:visited {
-  /* background-color: #f44336;
-  padding: 14px 25px; */
+/* a:link, a:visited {
+  background-color: #f44336;
+  padding: 14px 25px;
   color: white;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-}
+} */
 
-a:hover, a:active {
+/* a:hover, a:active {
   background-color: red;
-}
+} */
 
 table {
   text-align: left;
@@ -91,6 +91,19 @@ table td {
   text-align: center;
   width: 25px;
   height: 25px;
+}
+
+.team-logo25 {
+    width: 25px;
+    height: 25px;
+}
+
+.text-small {
+    font-size: small;
+}
+
+.img-menu {
+    width: 35px;
 }
 
 .text-center {
@@ -187,8 +200,12 @@ li a, .dropbtn {
   text-decoration: none;
 }
 
-li a:hover, .dropdown:hover .dropbtn {
+/* li a:hover, .dropdown:hover .dropbtn {
   background-color: red;
+} */
+
+a:hover {
+    text-decoration: none;
 }
 
 li.dropdown {
@@ -258,8 +275,8 @@ li.dropdown {
 
 .box {
   float: left;
-  height: 13px;
-  width: 13px;
+  height: 15px;
+  width: 15px;
   margin-bottom: 2px;
   border-radius:50%;
   clear: both;
@@ -325,4 +342,8 @@ width: 25%;
 
 .grey-text-table-headers {
     color: grey;
+}
+
+.tooltip-img {
+    height: 18px;
 }

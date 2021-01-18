@@ -9,6 +9,8 @@ from Topscorers import TopscorersTable
 from league import map_league_name_to_id, get_list_of_matchdays
 from week_dates_range import get_week_dates, get_day_name
 from datetime import date
+import season
+import db
 
 
 dictConfig({
@@ -39,7 +41,7 @@ def index():
 
     app.logger.info("Request to open index page")
 
-    return render_template('index.html',
+    return render_template('index_new.html',
                            matchday_fixtures=matchday_fixtures,
                            calendar=calendar,
                            day_name=day_name
@@ -54,7 +56,7 @@ def get_matchday_by_date(match_date):
 
     app.logger.info(f'Request to open matchday page {match_date}')
 
-    return render_template('index.html',
+    return render_template('index_new.html',
                            matchday_fixtures=matchday_fixtures,
                            calendar=calendar,
                            day_name=day_name)
@@ -139,9 +141,10 @@ def fixture_events_page(fixture_id):
 
 # @app.route("/update_db")
 # def update():
-#     league_ids = [2755, 2833, 2857, 2790]
+#     league_ids = [2816, 2847, 2794, 2755, 2833, 2857, 2790, 2660]
 #     for l_id in league_ids:
-#         fixtures = get_fixtures_by_league_id(l_id)
+#         fixtures = season.get_fixture_data(l_id)
+#         type(fixtures)
 #         db.db.fixtures_db_collection.insert_many(fixtures)
 #     return "dbUpdated: True"
 
