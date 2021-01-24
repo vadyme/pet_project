@@ -114,6 +114,9 @@ table td {
   text-align: left;
 }
 
+.top10 { margin-top:10px; }
+
+.top5 { margin-top:5px; }
 
 .team-names {
 	height: 20px;
