@@ -56,11 +56,14 @@ def get_fixtures_by_date(date):
 def update_if_live(fs):
     now = time.time()
     for f in fs:
-        if f.timestamp < now and (f.status != 'Match Finished'):
+        if f.timestamp < now and (f.status != 'Match Finished') or f.status_short == 'TBD':
             print(f' "The game needs an update: " {f.id}')
             fixture_update = api_client.get_fixture_by_id(f.id)
             update = fixture_update['api']['fixtures'][0]
             update_score = update['score']
+            f.event_date = update['event_date']
+            f.event_timestamp = update['event_timestamp']
+            f.status = update['status']
             f.status_short = update['statusShort']
             f.status = update['status']
             f.elapsed = update['elapsed']
@@ -71,7 +74,7 @@ def update_if_live(fs):
             f.score_et = update_score['extratime']
             f.score_pen = update_score['penalty']
             # TODO: rework the fixture class, add all necessary fields; make sure to update all fields in DB
-            dao.update_fixture_object(f.id, f.status_short, f.status, f.elapsed, f.goals_home_team, f.goals_away_team,
+            dao.update_fixture_object(f.event_date, f.event_timestamp, f.id, f.status_short, f.status, f.elapsed, f.goals_home_team, f.goals_away_team,
                                       f.score_ht, f.score_ft, f.score_et, f.score_pen)
 
 
