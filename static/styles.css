@@ -245,11 +245,13 @@ li.dropdown {
   display: block;
 }
 
-.tooltip {
+/* STANDINGS TABLE FORM */
+
+.custom-tooltip {
   position: relative;
 }
 
-.tooltip .tooltiptext {
+.custom-tooltip .custom-tooltiptext {
   visibility: hidden;
   width: 120px;
   background-color: black;
@@ -257,23 +259,21 @@ li.dropdown {
   text-align: center;
   border-radius: 6px;
   padding: 3px 0;
-
-  /* Position the tooltip */
   position: absolute;
   z-index: 1;
   bottom: 100%;
   margin-left: -60px;
 }
 
-.tooltip:hover .tooltiptext {
+.custom-tooltip:hover .custom-tooltiptext {
   visibility: visible;
   overflow: visible;
 }
 
-.tooltip .tooltiptext::after {
+.custom-tooltip .custom-tooltiptext::after {
   content: " ";
   position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  top: 100%;
   left: 50%;
   margin-left: -5px;
   border-width: 5px;
@@ -281,12 +281,12 @@ li.dropdown {
   border-color: black transparent transparent transparent;
 }
 
-.box {
+.custom-box {
   float: left;
   height: 15px;
   width: 15px;
   margin-bottom: 2px;
-  border-radius:50%;
+  border-radius: 15%;
   clear: both;
 }
 
@@ -301,6 +301,8 @@ li.dropdown {
 .grey {
   background-color: grey;
 }
+
+/* END STANDINGS TABLE FORM */
 
 .column {
     float:left;

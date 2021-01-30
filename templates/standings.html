@@ -6,53 +6,69 @@
 {% block content %}
 
 {{ super() }}
+<div class="row">
+		<!--MAIN MENU-->
 
-<!--        rank,
-        team_id,
-        team_name,
-        team_logo,
-        group,
-        forme,
-        status,
-        description,
-        all_played,
-        all_win,
-        all_draw,
-        all_lose,
-        all_goals_for,
-        all_goals_against,
-        goals_diff,
-        pts-->
-
-<!--    <div class = "header">-->
-<!--        STANDINGS-->
-<!--    </div>-->
-    <div class = "column middle">
-    <table>
-        <tbody>
-    <div class = "standings_table">
-        <tr class="grey-text-table-headers">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Pts</td>
-            <td>MP</td>
-            <td>W</td>
-            <td>D</td>
-            <td>L</td>
-            <td>GF</td>
-            <td>GA</td>
-            <td>GD</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        		<div class="col-md-2 border-right">
+			<div class="btn-group-vertical">
+				<ul class="nav flex-column">
+					<li class="nav-item h7 text-left">
+  						<a class="nav-link"  href="/"><span class="text-left"><b>Home</b></span></a>
+  					</li>
+  					<li class="nav-item h7 text-left">
+  						<a class="nav-link"  href="/league/primera_division"><span class="text-left"><b>La Liga</b></span></a>
+  					</li>
+  					<li class="nav-item h7 text-left">
+    					<a class="nav-link"  href="/league/premier_league"><span class="text-left"><b>English Premier League</b></span></a>
+  					</li>
+  					<li class="nav-item h7 text-left">
+    					<a class="nav-link"  href="/league/serie_a"><span class="text-left"><b>Serie A</b></span></a>
+  					</li>
+  					<li class="nav-item h7 text-left">
+    					<a class="nav-link"  href="/league/bundesliga_1"><span class="text-left"><b>Bundesliga</b></span></a>
+  					</li>
+  					 <li class="nav-item h7 text-left">
+    					<a class="nav-link"  href="/league/jupiler_pro_league"><span class="text-left"><b>Jupiler Pro League</b></span></a>
+  					</li>
+  					<li class="nav-item h7 text-left">
+    					<a class="nav-link"  href="/league/super_lig"><span class="text-left"><b>Süper Lig</b></span></a>
+  					</li>
+  					 <li class="nav-item h7 text-left">
+    					<a class="nav-link"  href="/league/championship"><span class="text-left"><b>EFL Championship</b></span></a>
+  					</li>
+					<li class="nav-item h7 text-left">
+    					<a class="nav-link"  href="/league/segunda_division"><span class="text-left"><b>La Liga 2</b></span></a>
+  					</li>
+				</ul>
+			</div>
+		</div>
+    <div class="col-md-8">
+        <table class="table table-striped table-dark">
+            <thead>
+                    <tr class="grey-text-table-headers">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Pts</td>
+                    <td>MP</td>
+                    <td>W</td>
+                    <td>D</td>
+                    <td>L</td>
+                    <td>GF</td>
+                    <td>GA</td>
+                    <td>GD</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
         </tr>
+            </thead>
+        <tbody>
         {% for row in table %}
             <tr>
                 <td>{{row.rank}}</td>
-                <td><img class="img-center" src = "{{row.team_logo}}"></a></td>
+                <td><img class="img-center" src = "{{row.team_logo}}"></td>
                 <td>{{row.team_name}}</td>
                 <td><b>{{row.pts}}</b></td>
                 <td>{{row.played}}</td>
@@ -64,62 +80,62 @@
                 <td>{{row.gd}}</td>
                 {% for fixture in row.form %}
                     {% if fixture.goals_home_team == fixture.goals_away_team %}
-                        <td class="tooltip">
-                            <div class='box grey'></div>
-                                <span class="tooltiptext">
+                        <td class="custom-tooltip">
+                            <div class='custom-box grey'></div>
+                                <div class="custom-tooltiptext">
                                     <a href="/fixture/{{fixture.id}}">
                                         {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
                                     </a>
-                                </span>
+                                </div>
                         </td>
                     {% elif fixture.home_team_name == row.team_name %}
                         {% if fixture.goals_home_team > fixture.goals_away_team %}
-                            <td class="tooltip">
-                                <div class='box green'></div>
-                                    <span class="tooltiptext">
-                                        <a href="/fixture/{{fixture.id}}">
-                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
-                                        </a>
-                                    </span>
-                            </td>
+                        <td class="custom-tooltip">
+                            <div class='custom-box green'></div>
+                                <div class="custom-tooltiptext">
+                                    <a href="/fixture/{{fixture.id}}">
+                                        {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                    </a>
+                                </div>
+                        </td>
                         {% elif fixture.goals_home_team < fixture.goals_away_team %}
-                            <td class="tooltip">
-                                <div class='box red'></div>
-                                    <span class="tooltiptext">
-                                        <a href="/fixture/{{fixture.id}}">
-                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
-                                        </a>
-                                    </span>
-                            </td>
+                         <td class="custom-tooltip">
+                            <div class='custom-box red'></div>
+                                <div class="custom-tooltiptext">
+                                    <a href="/fixture/{{fixture.id}}">
+                                        {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                    </a>
+                                </div>
+                        </td>
                         {% endif %}
                     {% elif fixture.away_team_name == row.team_name %}
                         {% if fixture.goals_home_team > fixture.goals_away_team %}
-                            <td class="tooltip">
-                                <div class='box red'></div>
-                                    <span class="tooltiptext">
-                                        <a href="/fixture/{{fixture.id}}">
-                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
-                                        </a>
-                                    </span>
-                            </td>
+                        <td class="custom-tooltip">
+                            <div class='custom-box red'></div>
+                                <div class="custom-tooltiptext">
+                                    <a href="/fixture/{{fixture.id}}">
+                                        {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                    </a>
+                                </div>
+                        </td>
                         {% elif fixture.goals_home_team < fixture.goals_away_team %}
-                            <td class="tooltip">
-                                <div class='box green'></div>
-                                    <span class="tooltiptext">
-                                        <a href="/fixture/{{fixture.id}}">
-                                            {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
-                                        </a>
-                                    </span>
-                            </td>
+                        <td class="custom-tooltip">
+                            <div class='custom-box green'></div>
+                                <div class="custom-tooltiptext">
+                                    <a href="/fixture/{{fixture.id}}">
+                                        {{fixture.home_team_name}}<br>{{fixture.score}}<br>{{fixture.away_team_name}}
+                                    </a>
+                                </div>
+                        </td>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
 
             </tr>
         {% endfor %}
-    </div>
         </tbody>
     </table>
     </div>
+</div>
 
 {% endblock %}
