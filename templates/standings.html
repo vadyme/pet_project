@@ -10,6 +10,11 @@
 		<!--MAIN MENU-->
 
         		<div class="col-md-2 border-right">
+                    			<nav aria-label="breadcrumb">
+  				<ol class="breadcrumb">
+    				<li class="breadcrumb-item active" aria-current="page">Leagues</li>
+  				</ol>
+			</nav>
 			<div class="btn-group-vertical">
 				<ul class="nav flex-column">
 					<li class="nav-item h7 text-left">
@@ -43,7 +48,39 @@
 			</div>
 		</div>
     <div class="col-md-8">
-        <table class="table table-striped table-dark">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">{{league_name}} | </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="/league/{{ league_name }}">Current matchday</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Results
+        </a>
+        <div class="dropdown-menu">
+            <ul>
+            <li>{% for matchday in matchdays %}
+                {% if (matchday.split("Regular_Season_-_"))[1]|int < (current_matchday.split("Regular Season - "))[1]|int %}
+                    <a class="dropdown-item" href="/league/{{ league_name }}/{{matchday}}"> Matchday {{matchday.split("Regular_Season_-_")[1]}}</a>
+                {% endif %}
+            {% endfor %}</li>
+
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+                </ul>
+        </div>
+      </li>
+      <a class="nav-item nav-link" href="/league/{{league_name}}/standings">Standings</a>
+        <a class="nav-item nav-link" href="/league/{{league_name}}/topscorers">Top Scorers</a>
+      <a class="nav-item nav-link disabled" href="#">Fixtures</a>
+    </div>
+  </div>
+</nav>
+        <table class="table table-striped table-dark table-hover table-sm">
             <thead>
                     <tr class="grey-text-table-headers">
                     <td></td>
