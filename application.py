@@ -41,7 +41,7 @@ def index():
 
     app.logger.info("Request to open index page")
 
-    return render_template('index_new.html',
+    return render_template('index.html',
                            matchday_fixtures=matchday_fixtures,
                            calendar=calendar,
                            day_name=day_name
@@ -56,7 +56,7 @@ def get_matchday_by_date(match_date):
 
     app.logger.info(f'Request to open matchday page {match_date}')
 
-    return render_template('index_new.html',
+    return render_template('index.html',
                            matchday_fixtures=matchday_fixtures,
                            calendar=calendar,
                            day_name=day_name)
@@ -75,7 +75,7 @@ def test_page(league_name, pathtomatchday=None):
 
         app.logger.info(f'Request to open league page {league_name}')
 
-        return render_template('league_matchday.html', methods=['GET'],
+        return render_template('league_matchday_new.html', methods=['GET'],
                                matchdays=matchdays,
                                current_matchday=current_matchday,
                                matchday_id=matchday_id,
@@ -141,7 +141,7 @@ def fixture_events_page(fixture_id):
 
 # @app.route("/update_db")
 # def update():
-#     league_ids = [2816, 2847, 2794, 2755, 2833, 2857, 2790, 2660]
+#     league_ids = [2771, 2777]
 #     for l_id in league_ids:
 #         fixtures = season.get_fixture_data(l_id)
 #         type(fixtures)
