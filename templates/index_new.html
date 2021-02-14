@@ -18,6 +18,11 @@
 	<div class="row">
 		<!--MAIN MENU-->
 		<div class="col-md-2 border-right">
+			<nav aria-label="breadcrumb">
+  				<ol class="breadcrumb">
+    				<li class="breadcrumb-item active" aria-current="page">Leagues</li>
+  				</ol>
+			</nav>
 			<div class="btn-group-vertical">
 				<ul class="nav flex-column">
 					<li class="nav-item h7 text-left">
@@ -52,6 +57,11 @@
 		</div>
 		<!--Fixtures list-->
 		<div class="col-md-8 border-right">
+						<nav aria-label="breadcrumb">
+  				<ol class="breadcrumb">
+    				<li class="breadcrumb-item active" aria-current="page">DATE INFO HERE</li>
+  				</ol>
+			</nav>
 			{% if matchday_fixtures|length > 0 %}
 				{% for fixture in matchday_fixtures %}
 					<div class="row text-small">
@@ -70,13 +80,23 @@
 							<span><img style="width:25px" src={{fixture.away_team_logo}}> {{fixture.away_team_name}}</span>
 						</div>
 						<div class="col-md-1 align-self-center">
-							<span class="badge badge-secondary">
-								{% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
-									{{fixture.elapsed}}'
-								{% else %}
-									{{fixture.status_short}}
-								{% endif %}
-							</span>
+							{% if fixture.status_short == "PST" %}
+								<span class="badge badge-secondary badge-warning">
+										{{fixture.status_short}}
+								</span>
+							{% elif fixture.status_short == "FT" %}
+								<span class="badge badge-primary">
+										{{fixture.status_short}}
+								</span>
+							{% else %}
+								<span class="badge badge-success">
+									{% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
+										{{fixture.elapsed}}'
+<!--									{% else %}-->
+<!--										{{fixture.status_short}}-->
+									{% endif %}
+								</span>
+							{% endif %}
 						</div>
 						<div class="col-md-2 align-self-center">
 							<span>
@@ -99,10 +119,12 @@
                 	{% endfor %}
             	{% endfor %}
 			</div>
+
 		</div>
+</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12"></div>
+		<div class="col-md-12"><div data-date="12/03/2012"></div></div>
 	</div>
 	</div>
 {% endblock %}
