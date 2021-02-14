@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-	<!--Fixtures list-->
 	{% if matchday_fixtures|length > 0 %}
 		{% for fixture in matchday_fixtures %}
 			<div class="row text-small">
@@ -32,6 +31,10 @@
 							</span>
 						{% elif fixture.status_short == "FT" %}
 							<span class="badge badge-primary">
+								{{fixture.status_short}}
+							</span>
+						{% elif fixture.status_short == "NS" %}
+							<span class="badge badge-secondary">
 								{{fixture.status_short}}
 							</span>
 						{% else %}
