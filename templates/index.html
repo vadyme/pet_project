@@ -5,49 +5,51 @@
 {% endblock %}
 
 {% block content %}
-<!--<div class = "calendar">-->
-<!--    <table>-->
-<!--        <tr>-->
-<!--            {% for day in calendar %}-->
-<!--                {% for key, value in day.items() %}-->
-<!--                    <td>-->
-<!--                        <a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}}/{{value.split('-')[2]}} </a>-->
-<!--                    </td>-->
-<!--                {% endfor %}-->
-<!--            {% endfor %}-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--</div>-->
-<div id="date">{{day_name}}</div>
-<div class="column middle">
-    <table>
-        <tbody>
-        {% if matchday_fixtures|length > 0 %}
-            {% for fixture in matchday_fixtures %}
-                <tr>
-                    <td class="text-center">{{fixture.kickoff_date.time}}</td>
-                    <td class="home-team">{{fixture.home_team_name}}</td>
-                    <td class="img-center"><img class="img-center" src={{fixture.home_team_logo}}></td>
-                    {% if fixture.goals_home_team != None %}
-                    <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.goals_home_team}}:{{fixture.goals_away_team}}</a></td>
-                    {% else %}
-                    <td class="text-center"><a href="/fixture/{{fixture.id}}">{{fixture.kickoff_date.time}}</a></td>
-                    {% endif %}
-                    <td class="img-center"><img class="img-center" src={{fixture.away_team_logo}}></td>
-                    <td class="away-team">{{fixture.away_team_name}}</td>
-                    {% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
-                        <td class="text-center">{{fixture.elapsed}}'</td>
-                    {% else %}
-                        <td class="text-center">{{fixture.status_short}}</td>
-                    {% endif %}
-                    <td class="img-center"><img src={{fixture.country_flag}} style="width:20px;height:20px;"></td>
-                    <td class="text-left"><a href="/league/{{fixture.urlified_league_name}}">{{fixture.league_name}}</a></td>
-                </tr>
-            {% endfor %}
-        {% else %}
-            <div id="empty-table">No matches today</div>
-        {% endif %}
-        </tbody>
-    </table>
-</div>
+	<!--Fixtures list-->
+	{% if matchday_fixtures|length > 0 %}
+		{% for fixture in matchday_fixtures %}
+			<div class="row text-small">
+				<div class="col-md-1 text-right align-self-center"><span>{{fixture.kickoff_date.time}}</span></div>
+				<div class="col-md-3 text-right align-self-center"><span>{{fixture.home_team_name}} <img style="width:25px" src={{fixture.home_team_logo}}></span></div>
+					<div class="col-md-1 text-center align-self-center">
+						<button type="button" class="btn btn-outline-info btn-sm">
+							<a href="/fixture/{{fixture.id}}">
+								{% if fixture.goals_home_team != None %}
+									{{fixture.goals_home_team}}:{{fixture.goals_away_team}}
+								{% else %}
+									- : -
+								{% endif %}
+							</a>
+						</button>
+					</div>
+					<div class="col-md-3 align-self-center">
+						<span><img style="width:25px" src={{fixture.away_team_logo}}> {{fixture.away_team_name}}</span>
+					</div>
+					<div class="col-md-1 align-self-center">
+						{% if fixture.status_short == "PST" %}
+							<span class="badge badge-secondary badge-warning">
+								{{fixture.status_short}}
+							</span>
+						{% elif fixture.status_short == "FT" %}
+							<span class="badge badge-primary">
+								{{fixture.status_short}}
+							</span>
+						{% else %}
+							<span class="badge badge-success">
+								{% if fixture.elapsed != 90 and fixture.elapsed != 0 %}
+									{{fixture.elapsed}}'
+								{% endif %}
+							</span>
+						{% endif %}
+					</div>
+					<div class="col-md-2 align-self-center">
+						<span>
+							<img src={{fixture.country_flag}} style="width:20px;height:20px;"><a href="/league/{{fixture.urlified_league_name}}">  {{fixture.league_name}}</a>
+						</span>
+					</div>
+					<div class="col-md-1"></div>
+			</div>
+			<div class="row top5"></div>
+		{% endfor %}
+	{% endif %}
 {% endblock %}
