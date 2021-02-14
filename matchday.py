@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import time
-
+import aiohttp
+import asyncio
 import api_client
 import fixture
 import dao
@@ -46,8 +47,8 @@ def get_fixtures_by_date(date):
 
     # if kickoff time is earlier than now and the game is NS, fetch the data from API and update the DB
     # TODO: if there are multiple fixtures as above, think on sending asynchronous calls
-    update_if_live(fs)
-
+    # update_if_live(fs)
+    asyncio.run(async_update_if_live(fs))
     sorted_fixtures = sorted(fs, key=lambda x: x.kickoff_date.time)
 
     return sorted_fixtures
@@ -57,7 +58,7 @@ def update_if_live(fs):
     now = time.time()
     for f in fs:
         if f.timestamp < now and (f.status != 'Match Finished') or f.status_short == 'TBD':
-            print(f' "The game needs an update: " {f.id}')
+            print(f' "The game needs an update: " {f.id} @ {time.time()}')
             fixture_update = api_client.get_fixture_by_id(f.id)
             update = fixture_update['api']['fixtures'][0]
             update_score = update['score']
@@ -76,6 +77,43 @@ def update_if_live(fs):
             # TODO: rework the fixture class, add all necessary fields; make sure to update all fields in DB
             dao.update_fixture_object(f.event_date, f.event_timestamp, f.id, f.status_short, f.status, f.elapsed, f.goals_home_team, f.goals_away_team,
                                       f.score_ht, f.score_ft, f.score_et, f.score_pen)
+            print(f' "The game has been updated: " {f.id} @ {time.time()}')
+
+
+async def async_update_if_live(fs):
+    now = time.time()
+    async with aiohttp.ClientSession() as session:
+        updates = []
+        for f in fs:
+            if f.timestamp < now and (f.status != 'Match Finished') or f.status_short == 'TBD':
+                print(f' "The game needs an update: " {f.id} @ {time.time()}')
+                update = asyncio.ensure_future(update_fixture(session, f))
+                updates.append(update)
+
+        return await asyncio.gather(*updates)
+
+
+async def update_fixture(session, f):
+    fixture_update = api_client.get_fixture_by_id(f.id)
+    update = fixture_update['api']['fixtures'][0]
+    update_score = update['score']
+    f.event_date = update['event_date']
+    f.event_timestamp = update['event_timestamp']
+    f.status = update['status']
+    f.status_short = update['statusShort']
+    f.status = update['status']
+    f.elapsed = update['elapsed']
+    f.goals_home_team = update['goalsHomeTeam']
+    f.goals_away_team = update['goalsAwayTeam']
+    f.score_ht = update_score['halftime']
+    f.score_ft = update_score['fulltime']
+    f.score_et = update_score['extratime']
+    f.score_pen = update_score['penalty']
+    # TODO: rework the fixture class, add all necessary fields; make sure to update all fields in DB
+    dao.update_fixture_object(f.event_date, f.event_timestamp, f.id, f.status_short, f.status, f.elapsed,
+                              f.goals_home_team, f.goals_away_team,
+                              f.score_ht, f.score_ft, f.score_et, f.score_pen)
+    print(f' "The game has been updated: " {f.id} @ {time.time()}')
 
 
 def build_list_of_fixture_objects(fixtures):
