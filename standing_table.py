@@ -31,14 +31,14 @@ class Standing(object):
         self.pts = pts
 
 
-def create_standings_object(standing):
+def create_standings_object(league_id, standing):
     rank = standing['rank']
     team_id = standing['team_id']
     team_name = standing['teamName']
     team_logo = standing['logo']
     group = standing['group']
     # forme = standing['forme']
-    form = get_form(team_id)
+    form = get_form(league_id, team_id)
     status = standing['status']
     description = standing['description']
     all_played = standing['all']['matchsPlayed']
@@ -178,7 +178,7 @@ def build_standings_table(league_id):
 
     standing_table_rows = []
     for row in table_data:
-        standing_table_rows.append(create_standings_object(row))
+        standing_table_rows.append(create_standings_object(league_id, row))
         # logo = row['logo']
         # rank = row['rank']
         # team_name = row['teamName']
@@ -198,9 +198,9 @@ def build_standings_table(league_id):
     return standing_table_rows
 
 
-def get_form(team_id):
+def get_form(league_id, team_id):
 
-    fixtures = get_form_by_team(team_id)
+    fixtures = get_form_by_team(league_id, team_id)
     fs = build_list_of_fixture_objects(fixtures)
 
     return fs
