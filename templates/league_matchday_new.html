@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="navbar-brand">{{league_name}} |</div>
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -38,6 +37,17 @@
     </ul>
   </div>
 </nav>
+<div class="row justify-content-center align-items-center">
+	{% for matchday in matchdays %}
+<!--		{% if (matchday.split("Regular_Season_-_"))[1]|int < (current_matchday.split("Regular Season - "))[1]|int %}-->
+	<div class="btn-toolbar" role="toolbar">
+		<button type="button" class="btn btn-outline-dark btn-sm"><a href="/league/{{ league_name }}/{{matchday}}">{{matchday.split("Regular_Season_-_")[1]}}</a></button>
+	</div>
+		<!--		{% endif %}-->
+	{% endfor %}
+</div>
+
+<div class="top10"></div>
 <div class="top10"></div>
 	{% if fixtures|length > 0 %}
 		{% for fixture in fixtures %}
