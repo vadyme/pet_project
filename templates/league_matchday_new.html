@@ -57,11 +57,13 @@
 						<div class="col-md-3 text-right align-self-center"><span>{{fixture.home_team_name}} <img style="width:25px" src={{fixture.home_team_logo}}></span></div>
 						<div class="col-md-1 text-center align-self-center">
 							<button type="button" class="btn btn-outline-info btn-sm">
+								<a href="/fixture/{{fixture.id}}">
 								{% if fixture.goals_home_team != None %}
 									{{fixture.goals_home_team}}:{{fixture.goals_away_team}}
 								{% else %}
 								- : -
 								{% endif %}
+								</a>
 							</button>
 						</div>
 						<div class="col-md-3 align-self-center">
