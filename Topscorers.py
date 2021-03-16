@@ -44,15 +44,5 @@ def get_topscorers_data(input):
 
 def populate_table_data(i):
     table_data = get_topscorers_data(i)
-
-    items = []
-    for row in table_data:
-        name = row['player_name']
-        team = row['team_name']
-        # minutes = row['games']['minutes_played']
-        goals = row['goals']['total']
-        nationality = row['nationality']
-        # assists = row['goals']['assists']
-
-        items.append(Topscorer(goals, name, team, nationality))
+    items = [Topscorer(row['goals']['total'], row['player_name'], row['team_name'], row['nationality']) for row in table_data]
     return items

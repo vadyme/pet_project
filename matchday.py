@@ -125,12 +125,5 @@ async def get_fixture_update(session, f):
 
 
 def build_list_of_fixture_objects(fixtures):
-    # TODO: there is really no need to call this API often. Since the schedule is pre-defined for the entire season,
-    # just save it somewhere and read, periodically updating if there are any changes to schedule.
-
-    fixture_objects_list = []
-    for f in fixtures:
-        fixture_id = f['fixture_id']
-        fixture_objects_list.append(fixture.create_fixture_object(fixture_id))
-
+    fixture_objects_list = [fixture.create_fixture_object(f['fixture_id']) for f in fixtures]
     return fixture_objects_list
