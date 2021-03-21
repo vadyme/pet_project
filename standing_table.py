@@ -164,8 +164,8 @@ class StandingTableRow(object):
         self.form = form
 
 
-def build_list_of_position_objects(league_id):
-    position_objects = []
+# def build_list_of_position_objects(league_id):
+#     position_objects = []
 
 
 def get_league_standings(league_id):
@@ -176,9 +176,9 @@ def get_league_standings(league_id):
 def build_standings_table(league_id):
     table_data = get_league_standings(league_id)
 
-    standing_table_rows = []
-    for row in table_data:
-        standing_table_rows.append(create_standings_object(league_id, row))
+    standing_table_rows = [create_standings_object(league_id, row) for row in table_data]
+    # for row in table_data:
+    #     standing_table_rows.append(create_standings_object(league_id, row))
         # logo = row['logo']
         # rank = row['rank']
         # team_name = row['teamName']

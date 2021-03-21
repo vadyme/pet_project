@@ -86,13 +86,14 @@ def get_fixtures_by_date(date):
 async def async_update_if_live(fs):
     now = time.time()
     async with aiohttp.ClientSession() as session:
-        tasks = []
+        # tasks = []
         #TODO: check if live upstream to avoid iterating through the entire list here
-        for f in fs:
-            if f.timestamp < now and (f.status != 'Match Finished') or f.status_short == 'TBD':
-                print(f' "The game needs an update: " {f.id} @ {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))}')
-                task = asyncio.ensure_future(get_fixture_update(session, f))
-                tasks.append(task)
+        tasks = [asyncio.ensure_future(get_fixture_update(session, f)) for f in fs if f.timestamp < now and (f.status != 'Match Finished') or f.status_short == 'TBD']
+        # for f in fs:
+        #     if f.timestamp < now and (f.status != 'Match Finished') or f.status_short == 'TBD':
+        #         print(f' "The game needs an update: " {f.id} @ {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))}')
+        #         task = asyncio.ensure_future(get_fixture_update(session, f))
+        #         tasks.append(task)
         # list of queries:
         query = await asyncio.gather(*tasks)
         print(f' "Updating the DB: @ {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))}')
