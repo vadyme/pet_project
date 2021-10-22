@@ -1,15 +1,28 @@
 import api_client
 
-available_leagues = {'segunda_division': 2847,
-                     'championship': 2794,
-                     'bundesliga_1': 2755,
-                     'primera_division': 2833,
-                     'serie_a': 2857,
-                     'premier_league': 2790,
-                     'jupiler_pro_league': 2660,
-                     'super_lig': 2816,
-                     'ucl': 2771,
-                     'uel': 2777
+# available_leagues = {'segunda_division': 2847,
+#                      'championship': 2794,
+#                      'bundesliga_1': 2755,
+#                      'primera_division': 2833,
+#                      'serie_a': 2857,
+#                      'premier_league': 2790,
+#                      'jupiler_pro_league': 3450,
+#                      'super_lig': 2816,
+#                      'ucl': 2771,
+#                      'uel': 2777
+#                      }
+
+available_leagues = {'segunda_division': 3516,
+                     'championship': 3501,
+                     'bundesliga_1': 3510,
+                     'primera_division': 3513,
+                     'serie_a': 3576,
+                     'premier_league': 3456,
+                     'jupiler_pro_league': 3450,
+                     'super_lig': 3552,
+                    'primeira_liga': 3575,
+                     'ucl': 3431,
+                     'uel': 3632
                      }
 
 
