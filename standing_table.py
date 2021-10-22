@@ -135,9 +135,10 @@ def get_standings_by_league_id(input):
     else:
         f = open(input)
         data = json.load(f)
-    table_data = data['api']['standings'][0]
+    # table_data = data['api']['standings'][0]
+    # table_data = data['api']['standings']
 
-    return table_data
+    return data
 
 
 # def get_table_data_from_api_response(league_id):
@@ -169,16 +170,21 @@ class StandingTableRow(object):
 
 
 def get_league_standings(league_id):
-    table = get_standings_by_league_id(league_id)
-    return table
+    # returns list of league tables
+    data = get_standings_by_league_id(league_id)
+
+    return [x for x in data['api']['standings']]
 
 
 def build_standings_table(league_id):
-    table_data = get_league_standings(league_id)
-
-    standing_table_rows = [create_standings_object(league_id, row) for row in table_data]
-    # for row in table_data:
-    #     standing_table_rows.append(create_standings_object(league_id, row))
+    table_data = get_league_standings(league_id) # list of league tables
+    # for each table I would have to build table of objects
+    tables = []
+    for t in table_data:
+        standing_table_rows = [create_standings_object(league_id, row) for row in t]
+        tables.append(standing_table_rows)
+        # for row in table_data:
+        #     standing_table_rows.append(create_standings_object(league_id, row))
         # logo = row['logo']
         # rank = row['rank']
         # team_name = row['teamName']
@@ -195,8 +201,8 @@ def build_standings_table(league_id):
         # standing_table_rows.append(
         #     StandingTableRow(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name,
         #                      games_played, wins, draws, losses, goals_for, goals_against, points, form))
-    return standing_table_rows
-
+    # return standing_table_rows
+    return tables
 
 def get_form(league_id, team_id):
 

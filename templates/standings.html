@@ -60,19 +60,6 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Results
         </a>
-        <div class="dropdown-menu">
-            <ul>
-            <li>{% for matchday in matchdays %}
-                {% if (matchday.split("Regular_Season_-_"))[1]|int < (current_matchday.split("Regular Season - "))[1]|int %}
-                    <a class="dropdown-item" href="/league/{{ league_name }}/{{matchday}}"> Matchday {{matchday.split("Regular_Season_-_")[1]}}</a>
-                {% endif %}
-            {% endfor %}</li>
-
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-                </ul>
-        </div>
       </li>
       <a class="nav-item nav-link" href="/league/{{league_name}}/standings">Standings</a>
         <a class="nav-item nav-link" href="/league/{{league_name}}/topscorers">Top Scorers</a>
@@ -80,6 +67,7 @@
     </div>
   </div>
 </nav>
+    {% for table in tables %}
         <table class="table table-striped table-dark table-hover table-sm">
             <thead>
                     <tr class="grey-text-table-headers">

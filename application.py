@@ -92,12 +92,12 @@ def test_page(league_name, pathtomatchday=None):
 def league_standings(league_name):
     league_id = map_league_name_to_id(league_name)
     # table = StandingTable(standing_table.build_standings_table(league_id))
-    table = standing_table.build_standings_table(league_id)
+    tables = standing_table.build_standings_table(league_id)
     current_matchday = matchday.get_current_matchday_id(league_id)
     matchdays = reversed(get_list_of_matchdays(league_id))
 
     return render_template('standings.html', methods=['GET'],
-                           table=table,
+                           tables=tables,
                            league_name=league_name,
                            current_matchday=current_matchday,
                            matchdays=matchdays)
