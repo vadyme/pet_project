@@ -12,21 +12,11 @@
 			<li class="nav-item">
         		<a class="nav-link" href="/league/{{ league_name }}">Current matchday</a>
       		</li>
-      		<li class="nav-item dropdown">
-        		<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          			Matches
-        		</a>
-				<div class="dropdown-menu show">
-<!--					<ul>-->
-<!--						<li>-->
-							{% for matchday in matchdays %}
-								{% if (matchday.split("Regular_Season_-_"))[1]|int < (current_matchday.split("Regular Season - "))[1]|int %}
-									<a class="dropdown-item" href="/league/{{ league_name }}/{{matchday}}"> Matchday {{matchday.split("Regular_Season_-_")[1]}}</a>
-								{% endif %}
-							{% endfor %}
-<!--						</li>-->
-<!--					</ul>-->
-				</div>
+<!--      		<li class="dropdown show">-->
+<li class="btn-group">
+			  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Action
+			  </button>
       		</li>
 			<li>
 				<a class="nav-item nav-link" href="/league/{{league_name}}/standings">Standings</a>
@@ -37,15 +27,6 @@
     </ul>
   </div>
 </nav>
-<div class="row justify-content-center align-items-center">
-	{% for matchday in matchdays %}
-<!--		{% if (matchday.split("Regular_Season_-_"))[1]|int < (current_matchday.split("Regular Season - "))[1]|int %}-->
-	<div class="btn-toolbar" role="toolbar">
-		<button type="button" class="btn btn-outline-dark btn-sm"><a href="/league/{{ league_name }}/{{matchday}}">{{matchday.split("Regular_Season_-_")[1]}}</a></button>
-	</div>
-		<!--		{% endif %}-->
-	{% endfor %}
-</div>
 
 <div class="top10"></div>
 <div class="top10"></div>

@@ -1,4 +1,4 @@
-{% extends "league_layout.html" %}
+{% extends "layout.html" %}
 {% block title %} Today Matches {% endblock %}
 {% block head %}
     {{ super() }}
@@ -9,45 +9,45 @@
 <div class="row">
 		<!--MAIN MENU-->
 
-        		<div class="col-md-2 border-right">
-                    			<nav aria-label="breadcrumb">
-  				<ol class="breadcrumb">
-    				<li class="breadcrumb-item active" aria-current="page">Leagues</li>
-  				</ol>
-			</nav>
-			<div class="btn-group-vertical">
-				<ul class="nav flex-column">
-					<li class="nav-item h7 text-left">
-  						<a class="nav-link"  href="/"><span class="text-left"><b>Home</b></span></a>
-  					</li>
-  					<li class="nav-item h7 text-left">
-  						<a class="nav-link"  href="/league/primera_division"><span class="text-left"><b>La Liga</b></span></a>
-  					</li>
-  					<li class="nav-item h7 text-left">
-    					<a class="nav-link"  href="/league/premier_league"><span class="text-left"><b>English Premier League</b></span></a>
-  					</li>
-  					<li class="nav-item h7 text-left">
-    					<a class="nav-link"  href="/league/serie_a"><span class="text-left"><b>Serie A</b></span></a>
-  					</li>
-  					<li class="nav-item h7 text-left">
-    					<a class="nav-link"  href="/league/bundesliga_1"><span class="text-left"><b>Bundesliga</b></span></a>
-  					</li>
-  					 <li class="nav-item h7 text-left">
-    					<a class="nav-link"  href="/league/jupiler_pro_league"><span class="text-left"><b>Jupiler Pro League</b></span></a>
-  					</li>
-  					<li class="nav-item h7 text-left">
-    					<a class="nav-link"  href="/league/super_lig"><span class="text-left"><b>Süper Lig</b></span></a>
-  					</li>
-  					 <li class="nav-item h7 text-left">
-    					<a class="nav-link"  href="/league/championship"><span class="text-left"><b>EFL Championship</b></span></a>
-  					</li>
-					<li class="nav-item h7 text-left">
-    					<a class="nav-link"  href="/league/segunda_division"><span class="text-left"><b>La Liga 2</b></span></a>
-  					</li>
-				</ul>
-			</div>
-		</div>
-    <div class="col-md-8">
+<!--        		<div class="col-md-2 border-right">-->
+<!--                    			<nav aria-label="breadcrumb">-->
+<!--  				<ol class="breadcrumb">-->
+<!--    				<li class="breadcrumb-item active" aria-current="page">Leagues</li>-->
+<!--  				</ol>-->
+<!--			</nav>-->
+<!--			<div class="btn-group-vertical">-->
+<!--				<ul class="nav flex-column">-->
+<!--					<li class="nav-item h7 text-left">-->
+<!--  						<a class="nav-link"  href="/"><span class="text-left"><b>Home</b></span></a>-->
+<!--  					</li>-->
+<!--  					<li class="nav-item h7 text-left">-->
+<!--  						<a class="nav-link"  href="/league/primera_division"><span class="text-left"><b>La Liga</b></span></a>-->
+<!--  					</li>-->
+<!--  					<li class="nav-item h7 text-left">-->
+<!--    					<a class="nav-link"  href="/league/premier_league"><span class="text-left"><b>English Premier League</b></span></a>-->
+<!--  					</li>-->
+<!--  					<li class="nav-item h7 text-left">-->
+<!--    					<a class="nav-link"  href="/league/serie_a"><span class="text-left"><b>Serie A</b></span></a>-->
+<!--  					</li>-->
+<!--  					<li class="nav-item h7 text-left">-->
+<!--    					<a class="nav-link"  href="/league/bundesliga_1"><span class="text-left"><b>Bundesliga</b></span></a>-->
+<!--  					</li>-->
+<!--  					 <li class="nav-item h7 text-left">-->
+<!--    					<a class="nav-link"  href="/league/jupiler_pro_league"><span class="text-left"><b>Jupiler Pro League</b></span></a>-->
+<!--  					</li>-->
+<!--  					<li class="nav-item h7 text-left">-->
+<!--    					<a class="nav-link"  href="/league/super_lig"><span class="text-left"><b>Süper Lig</b></span></a>-->
+<!--  					</li>-->
+<!--  					 <li class="nav-item h7 text-left">-->
+<!--    					<a class="nav-link"  href="/league/championship"><span class="text-left"><b>EFL Championship</b></span></a>-->
+<!--  					</li>-->
+<!--					<li class="nav-item h7 text-left">-->
+<!--    					<a class="nav-link"  href="/league/segunda_division"><span class="text-left"><b>La Liga 2</b></span></a>-->
+<!--  					</li>-->
+<!--				</ul>-->
+<!--			</div>-->
+<!--		</div>-->
+    <div class="col-md-12">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">{{league_name}} | </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
