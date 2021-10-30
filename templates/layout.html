@@ -83,25 +83,10 @@
 			    </div>
 		    </div>
 		    <!--Fixtures list-->
-		    <div class="col-md-8 border-right">
+		    <div class="col-md-10 border-right">
                 {% block content %}{% endblock %}
 		    </div>
-		<div class="col-md-2">
-			<div class="btn-group-vertical">
-				{% for day in calendar %}
-					{% for key, value in day.items() %}
-                    	<button class="btn btn-secondary btn-sm" type="button">
-                        	<a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}}/{{value.split('-')[2]}} </a>
-						</button>
-                	{% endfor %}
-            	{% endfor %}
-			</div>
-
-		</div>
-</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12"><div data-date="12/03/2012"></div></div>
+        </div>
 	</div>
 	</div>
 

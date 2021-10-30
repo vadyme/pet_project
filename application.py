@@ -74,7 +74,7 @@ def test_page(league_name, pathtomatchday=None):
         matchdays = list(reversed(get_list_of_matchdays(league_id)))
         # matchdays = list(get_reversed_list_of_matchdays(league_id))
         matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
-
+        tables = standing_table.build_short_standings_table(league_id)
         app.logger.info(f'Request to open league page {league_name}')
 
         return render_template('league_matchday_new.html', methods=['GET'],
@@ -82,7 +82,8 @@ def test_page(league_name, pathtomatchday=None):
                                current_matchday=current_matchday,
                                matchday_id=matchday_id,
                                fixtures=matchday_fixtures,
-                               league_name=league_name
+                               league_name=league_name,
+                               tables=tables
                                )
     else:
         app.logger.error("Page not found")

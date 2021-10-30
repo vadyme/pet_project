@@ -31,6 +31,26 @@ class Standing(object):
         self.pts = pts
 
 
+class ShortStanding(object):
+    def __init__(self, rank, team_name, logo, all_played, goals_diff, pts):
+        self.rank = rank
+        # self.team_id=team_id
+        self.team_name = team_name
+        self.team_logo = logo
+        # self.group = group
+        # self.form = form
+        # self.status = status
+        # self.description = description
+        self.played = all_played,
+        # self.win = all_win
+        # self.draw = all_draw
+        # self.lose = all_lose
+        # self.gf = all_goals_for
+        # self.ga = all_goals_against
+        self.gd = goals_diff
+        self.pts = pts
+
+
 def create_standings_object(league_id, standing):
     rank = standing['rank']
     team_id = standing['team_id']
@@ -69,6 +89,22 @@ def create_standings_object(league_id, standing):
         pts
     )
 
+def create_short_standings_object(standing):
+    rank = standing['rank']
+    team_name = standing['teamName']
+    team_logo = standing['logo']
+    all_played = standing['all']['matchsPlayed']
+    goals_diff = standing['goalsDiff']
+    pts = standing['points']
+
+    return ShortStanding(
+        rank,
+        team_name[0:3].upper(),
+        team_logo,
+        all_played,
+        goals_diff,
+        pts
+    )
 
     """
     {
@@ -183,26 +219,19 @@ def build_standings_table(league_id):
     for t in table_data:
         standing_table_rows = [create_standings_object(league_id, row) for row in t]
         tables.append(standing_table_rows)
-        # for row in table_data:
-        #     standing_table_rows.append(create_standings_object(league_id, row))
-        # logo = row['logo']
-        # rank = row['rank']
-        # team_name = row['teamName']
-        # all_games_stats = row['all']
-        # games_played = all_games_stats['matchsPlayed']
-        # wins = all_games_stats['win']
-        # draws = all_games_stats['draw']
-        # losses = all_games_stats['lose']
-        # goals_for = all_games_stats['goalsFor']
-        # goals_against = all_games_stats['goalsAgainst']
-        # points = row['points']
-        # form = row['forme']
-        #
-        # standing_table_rows.append(
-        #     StandingTableRow(rank, Markup('<img src =' + logo + ' style="width:20px;height:20px;">'), team_name,
-        #                      games_played, wins, draws, losses, goals_for, goals_against, points, form))
-    # return standing_table_rows
     return tables
+
+
+def build_short_standings_table(league_id):
+
+    table_data = get_league_standings(league_id) # list of league tables
+    # for each table I would have to build table of objects
+    tables = []
+    for t in table_data:
+        standing_table_rows = [create_short_standings_object(row) for row in t]
+        tables.append(standing_table_rows)
+    return tables
+
 
 def get_form(league_id, team_id):
 
