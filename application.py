@@ -57,6 +57,7 @@ def get_matchday_by_date(match_date):
     app.logger.info(f'Request to open matchday page {match_date}')
 
     return render_template('index.html',
+                           match_date=match_date,
                            matchday_fixtures=matchday_fixtures,
                            calendar=calendar,
                            day_name=day_name)

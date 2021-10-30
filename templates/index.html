@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block content %}
+		    <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+  				    <ol class="breadcrumb">
+    				    <li class="breadcrumb-item active" aria-current="page">{{match_date}}</li>
+  				    </ol>
+			    </nav>
+		    </div>
 	{% if matchday_fixtures|length > 0 %}
 		{% for fixture in matchday_fixtures %}
 			<div class="row text-small">
