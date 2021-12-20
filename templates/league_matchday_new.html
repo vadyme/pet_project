@@ -80,7 +80,9 @@
 						<td><img class="img-center" src = "{{row.team_logo}}"></td>
 						<td>{{row.team_name}}</td>
 						<td><b>{{row.pts}}</b></td>
-						<td>{{row.played}}</td>
+						{% for i in row.played %}
+							<td>{{i}}</td>
+						{% endfor %}
 						<td>{{row.gd}}</td>
 					</tr>
 					{% endfor %}
