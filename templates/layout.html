@@ -62,7 +62,7 @@
                             <a class="nav-link"  href="/league/bundesliga_1"><span class="text-left"><b>Bundesliga</b></span></a>
                         </li>
                         <li class="nav-item h7 text-left">
-                            <a class="nav-link"  href="/league/ucl"><span class="text-left"><b>UEFA Champions League</b></span></a>
+                                <a class="nav-link"  href="/league/ucl"><span class="text-left"><b>UEFA Champions League</b></span></a>
                         </li>
                         <li class="nav-item h7 text-left">
                             <a class="nav-link"  href="/league/uel"><span class="text-left"><b>UEFA Europa League</b></span></a>
@@ -83,8 +83,11 @@
 			    </div>
 		    </div>
 		    <!--Fixtures list-->
-		    <div class="col-md-10 border-right">
+		    <div class="col-md-8 border-right">
                 {% block content %}{% endblock %}
+		    </div>
+            <div class="col-md-2 border-right">
+                {% block right_well %}{% endblock %}
 		    </div>
         </div>
 	</div>
