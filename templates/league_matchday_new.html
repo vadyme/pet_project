@@ -13,6 +13,14 @@
 			<li class="breadcrumb-item active" aria-current="page">{{league_name}}</li>
 		</ol>
 	</nav>
+	<div class="col-md-12">
+		<div class="row text-small">
+		<div class="col-md-4 text-left align-self-center"><a href="/league/{{league_name}}/{{previous_matchday_id}}">{{previous_matchday_id}}</a></div>
+		<div class="col-md-4 text-center align-self-center">{{matchday_id}}</div>
+		<div class="col-md-4 text-right align-self-center"><a href="/league/{{league_name}}/{{next_matchday_id}}">{{next_matchday_id}}</a></div>
+		</div>
+		</div>
+	<div class="row text-small"></div>
 <!--LIST OF MATCHES-->
 	{% if fixtures|length > 0 %}
 		{% for fixture in fixtures %}

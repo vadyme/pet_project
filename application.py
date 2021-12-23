@@ -70,7 +70,10 @@ def test_page(league_name, pathtomatchday=None):
     # TODO: request update for fixtures in progress
     if league_id is not None:
         current_matchday = matchday.get_current_matchday_id(league_id)
+        #'Regular Season - 21'
         matchday_id = pathtomatchday.replace("_", " ") if pathtomatchday else current_matchday
+        previous_matchday_id = f'Regular Season - {str(int(matchday_id.split(" ")[-1])-1)}'
+        next_matchday_id = f'Regular Season - {str(int(matchday_id.split(" ")[-1]) + 1)}'
         matchdays = list(reversed(get_list_of_matchdays(league_id)))
         # matchdays = list(get_reversed_list_of_matchdays(league_id))
         matchday_fixtures = matchday.get_fixtures_by_league_and_round(league_id, matchday_id)
@@ -83,7 +86,9 @@ def test_page(league_name, pathtomatchday=None):
                                matchday_id=matchday_id,
                                fixtures=matchday_fixtures,
                                league_name=league_name,
-                               tables=tables
+                               tables=tables,
+                               previous_matchday_id=previous_matchday_id,
+                               next_matchday_id=next_matchday_id,
                                )
     else:
         app.logger.error("Page not found")
