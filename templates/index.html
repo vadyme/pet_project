@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "base_page.html" %}
 {% block title %} Golazo - Football Results {% endblock %}
 {% block head %}
     {{ super() }}
@@ -63,7 +63,27 @@
 		{% endfor %}
 	{% else %}
 		<div class="row text-small align-self-center">
-			<div class="col-md-12 text-center"><span><h3>No fixtures found</h3></span></div>
+			<div class="col-md-10 text-center"><span><h3>No fixtures found</h3></span></div>
 		</div>
 	{% endif %}
+{% endblock %}
+{% block right_well %}
+<!--CALENDAR-->
+		<div class="col-md-12">
+            <nav aria-label="breadcrumb">
+  				    <ol class="breadcrumb">
+    				    <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+  				    </ol>
+			    </nav>
+			<div class="btn-group-vertical">
+				{% for day in calendar %}
+					{% for key, value in day.items() %}
+                    	<button class="btn btn-secondary btn-sm" type="button">
+                        	<a href="/matchday/{{ value }}"> {{key}}, {{value.split('-')[1]}}/{{value.split('-')[2]}} </a>
+						</button>
+                	{% endfor %}
+            	{% endfor %}
+			</div>
+
+		</div>
 {% endblock %}
